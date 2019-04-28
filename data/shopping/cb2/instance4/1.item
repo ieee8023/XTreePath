@@ -1,0 +1,5 @@
+{
+"Description": '/html/body/div[3]/div[2]/div/div[2]/div[2]/div[3]/div[4]',
+"Price": '/html/body/div[3]/div[2]/div/div[2]/div[2]/div[3]/p/span[2]/span/span',
+"Title": '/html/body/div[3]/div[2]/div/div[2]/div[2]/div[3]/p/span[1]',
+}

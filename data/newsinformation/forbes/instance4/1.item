@@ -1,0 +1,5 @@
+{
+"Description": '//p[1]',
+"Author": '//h2[1]/a[1]',
+"Title": '/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/h1',
+}

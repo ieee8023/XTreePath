@@ -1,0 +1,6 @@
+{
+"SKU": '//tbody[1]/tr[3]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/div[1]',
+"Price": '/html/body/div/table[2]/tbody/tr[1]/td[2]/table/tbody/tr/td/div/form[1]/table/tbody/tr[3]/td[1]/table/tbody/tr[1]/td/div[3]/div',
+"Description": '/html/body/div/table[2]/tbody/tr[1]/td[2]/table/tbody/tr/td/div/form[1]/table/tbody/tr[3]/td[1]/table/tbody/tr[1]/td/div[2]/div/span[1]',
+"Title": '/html/body/div/table[2]/tbody/tr[1]/td[2]/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr[4]/td/div/table/tbody/tr/td[2]/a/font',
+}

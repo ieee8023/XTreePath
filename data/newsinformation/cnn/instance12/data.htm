@@ -1,0 +1,1457 @@
+<html lang="en" prefix="og: http://ogp.me/ns#" itemtype="http://schema.org/Blog" itemscope=""><!--<![endif]--><!--
+	generated 141 seconds ago
+	generated in 0.331 seconds
+	served from batcache in 0.003 seconds
+	expires in 159 seconds
+--><head><div style="display:none;" data-id="ITb_4eqO" class="kxhead"><span data-alias="Krux Load Segments" data-id="20614" class="kxtag kxinvisible"><script type="text/javascript" src="http://apiservices.krxd.net/user_data/segments/3?pubid=e9eaedd3-c1da-4334-82f0-d7e3ff883c87&amp;callback=Krux.ns._default.kxjsonp_userData"></script><script id="LR1" type="text/javascript" async="" src="http://platform.twitter.com/js/tfw/hub/client.js"></script><script id="twitter-wjs" src="//platform.twitter.com/widgets.js"></script><script src="https://apis.google.com/_/scs/apps-static/_/js/k=oz.gapi.en.6n6nwI51pnI.O/m=plusone/rt=j/sv=1/d=1/ed=1/am=AQ/rs=AItRSTPUXsQu93qlcxVJdKODC9kOUUVv6w/cb=gapi.loaded_0" async=""></script><script type="text/javascript">
+// DFP premium.
+(function(require) {
+  var store = require('store');
+  var _ = require('util');  
+  var segments;
+  
+  function handleUserDataResponse(r) {
+    // Handle the response as usual.
+    segments.handleUserDataResponse(r);
+    
+    // Override localStorage.kxuser with a case-insensitive value for DFP premium.
+    // This will get read by the interchange direct snippet for Krux.user
+    // and Krux.dfpKeyValues
+    if(r.kuid_long) {
+      store.set('user', r.kuid_long, store.DAYS*30);
+    }
+  }
+  
+  // Our own fetch uses our own handleResponse
+  function fetch() {
+    var options = {
+      url: _.get('url_userData'),
+      data: {pubid: _.get('pubid')},
+      callback: 'kxjsonp_userData',
+      done: handleUserDataResponse
+    };
+    if(!segments.readTechFromStore()) {
+      options.data.technographics = 1;
+    }
+    require('http').jsonp(options);  
+  }
+  
+  
+  if(!store.get('segWait')) {
+    // disable segments.fetch and use our own
+    _.set('segWait', 1, store.MINUTES*5);
+    _.onOnce('dom:load', fetch);
+    _.fire('user_data_fetch_scheduled');
+  }
+  
+  // Finally, require segments as usual.
+  segments = require('segments');
+}(Krux.require));
+</script></span><span data-alias="Krux Track Social" data-id="28016" class="kxtag kxinvisible"><script type="text/javascript">Krux('social.init');</script></span><span data-alias="Data Transfer Code v2" data-id="28449" class="kxtag kxinvisible"><script>
+// Using Globals currentVideoObj.franchiseName to produce page attribute currentVideoObj.franchiseName
+Krux('scrape', { "page_attr_currentVideoObj.franchiseName": {js_global: "currentVideoObj.franchiseName"}});
+</script></span><span data-alias="Data Transfer Code" data-id="22546" class="kxtag kxinvisible"><script class="krux-dtc">
+(function() {
+  window.Krux||((Krux=function(){Krux.q.push(arguments);}).q=[]);;
+  Krux.turnerDataTransfer = function() {
+    /*
+    Parse ad call
+    */
+
+    var attrs, el, els, find, i, key, keys, lookFor, m, match, ns, parts, pixel, site, size, sizes, _, _i, _len, _ref;
+    sizes = ["728x90", "300x250", "336x280", "160x600", "336x850", "300x600", "custom_rgt", "970x66"];
+    _ = Krux._;
+    find = Krux('require:sizzle').find;
+    el = null;
+    while (sizes.length &amp;&amp; (el == null)) {
+      size = sizes.pop();
+      els = find("*[src*=_pos=" + size + "], *[src*=_position=" + size + "]");
+      el = els[0];
+    }
+    if (el) {
+      m = el.src.match(/\.ng\/(site=.*)$/);
+      if (!m) {
+        return;
+      }
+      attrs = Krux('require:util').parseKeyValues(m[1]);
+      site = attrs.site;
+      if (!site) {
+        return;
+      }
+      Krux('set', "page_attr_" + site + "_site", site);
+      Krux('set', "page_attr_" + site + "_pagetype", attrs["" + site + "_pagetype"]);
+      Krux('set', "page_attr_" + site + "_rollup", attrs["" + site + "_rollup"]);
+      Krux('set', "page_attr_" + site + "_pos", attrs["" + site + "_pos"]);
+      Krux('set', "page_attr_" + site + "_position", attrs["" + site + "_position"]);
+      Krux('set', "page_attr_" + site + "_section", attrs["" + site + "_section"]);
+      Krux('set', "page_attr_" + site + "_subsection", attrs["" + site + "_subsection"]);
+      Krux('set', "section", attrs["" + site + "_rollup"]);
+      Krux('set', "subsection", attrs["" + site + "_section"]);
+    }
+    /*
+    Parse metrics pixel
+    */
+
+    ns = (function() {
+      var exceptions, jsmdmap, key1, key2, val1, val2, _ref;
+      if (window._jsmd_default) {
+        jsmdmap = _jsmd_default.map;
+        for (key1 in jsmdmap) {
+          val1 = jsmdmap[key1];
+          for (key2 in val1) {
+            val2 = val1[key2];
+            if (ns = val2 != null ? (_ref = val2.settings) != null ? _ref.visitorNamespace : void 0 : void 0) {
+              return ns;
+            }
+          }
+        }
+      }
+      exceptions = {
+        'NBA': 'nbagroup',
+        'Nascar': 'nascardigitalsap',
+        'Bleacher Report': 'turnersidigital'
+      };
+      return exceptions[Krux('get', 'site')];
+    })();
+    if (!ns) {
+      return;
+    }
+    lookFor = "&amp;h1=(.*?)&amp;";
+    i = 0;
+    pixel = window["s_i_" + ns];
+    while (pixel &amp;&amp; !(match = (_ref = pixel.src) != null ? _ref.match(lookFor) : void 0)) {
+      i++;
+      pixel = window["s_i_" + ns + "_" + i];
+    }
+    if (match) {
+      parts = decodeURIComponent(match[1]).split('|');
+      keys = ['lob', 'brand', 'bizunit', 'sitename', 'sitesectionlevel1', 'sitesectionlevel2'];
+      for (i = _i = 0, _len = keys.length; _i &lt; _len; i = ++_i) {
+        key = keys[i];
+        Krux('set', "page_attr_" + site + "_" + key, parts[i]);
+      }
+    }
+    return null;
+  };
+
+  Krux.turnerDataTransfer();
+
+}).call(this);
+ 
+// Using Meta keywords to produce page attribute keywords
+Krux('scrape', { "page_attr_keywords": {meta_name: "keywords"}});
+</script></span></div><script type="text/javascript" src="http://odb.outbrain.com/utils/get?url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;srcUrl=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2Ffeed%2F&amp;settings=true&amp;recs=true&amp;widgetJSId=AR_3&amp;key=NANOWDGT01&amp;idx=0&amp;version=163807&amp;ref=&amp;apv=false&amp;sig=AsPfGaEy&amp;format=html&amp;rand=29461" async=""></script>
+		<title>Hillary Clinton poses with Pussy Riot members &ndash; CNN Political Ticker - CNN.com Blogs</title>
+		<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+
+					
+
+			<meta content="Hillary Clinton poses with Pussy Riot members" name="title">
+		
+		<link rel="stylesheet" type="text/css" href="http://i.cdn.turner.com/cnn/.element/widget/sharebar/0.2.2/templates/blogSingle.css" id="blogSingleBottom"><script async="" src="//cdn.krxd.net/ctjs/controltag.js.b03611e4942732962bc477fb5bc7ba7e"></script><script async="" src="http://a.visualrevenue.com/vrs.js"></script><script type="text/javascript" async="" src="http://cdn.krxd.net/controltag?confid=ITb_4eqO"></script><script type="text/javascript" language="JavaScript">var cnnCurrTime = new Date(1396877863076); var cnnCurrHour = 9; var cnnCurrMin = 37; var cnnCurrDay='Mon';</script>		<link href="http://politicalticker.blogs.cnn.com/feed/" title="CNN Political Ticker RSS Feed" type="application/rss+xml" rel="alternate">
+		<link type="image/x-icon" href="http://i.cdn.turner.com/cnn/favicon.ico" rel="shortcut icon">
+		
+<meta content="(CNN) -- A photo of Hillary Clinton and members of the Russian pop band Pussy Riot has gone viral, with more than 9,000 retweets on Twitter and over 10,000 &quot;favorites." name="description">
+<meta content="hillary clinton, russia, cnn political unit" name="keywords">
+<meta content="mFBa4OnyEDU23vgVJ6rtX_4izud7FIi9JiscfVsWaKk" name="google-site-verification">
+		<script type="text/javascript" src="//r-login.wordpress.com/remote-login.php?action=js&amp;host=politicalticker.blogs.cnn.com&amp;id=1121504&amp;t=1396881265&amp;back=politicalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F%3Fhpt%3Dhp_t2"></script>
+		<script type="text/javascript">
+		/* &lt;![CDATA[ */
+			if ( 'function' === typeof WPRemoteLogin ) {
+				document.cookie = "wordpress_test_cookie=test; path=/";
+				if ( document.cookie.match( /(;|^)\s*wordpress_test_cookie\=/ ) ) {
+					WPRemoteLogin();
+				}
+			}
+		/* ]]&gt; */
+		</script>
+		<link href="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/feed/" title="CNN Political Ticker » Hillary Clinton poses with Pussy Riot members Comments Feed" type="application/rss+xml" rel="alternate">
+<script type="text/javascript">
+/* &lt;![CDATA[ */
+function addLoadEvent(func){var oldonload=window.onload;if(typeof window.onload!='function'){window.onload=func;}else{window.onload=function(){oldonload();func();}}}
+/* ]]&gt; */
+</script>
+<link media="all" type="text/css" href="http://s2.wp.com/_static/??/wp-content/mu-plugins/smileyproject/smileyproject.css,/wp-content/mu-plugins/likes/jetpack-likes.css?m=1396872254j" id="all-css-0" rel="stylesheet">
+<link media="screen" type="text/css" href="http://z.cdn.turner.com/cnn/tmpl_asset/static/blog/339/css/bloglib-min.css?ver=1376575537" id="cnn-bloglib-css-css" rel="stylesheet">
+<link media="screen" type="text/css" href="http://z.cdn.turner.com/cnn/tmpl_asset/static/blog/303/css/politicaltickerlib-min.css?ver=1376575537" id="cnn-blog-common-css" rel="stylesheet">
+<link media="screen" type="text/css" href="http://i.cdn.turner.com/cnn/.element/css/3.0/connect/overlay.css?ver=20100421" id="cnn-overlay-css" rel="stylesheet">
+<link media="screen" type="text/css" href="http://i.cdn.turner.com/cnn/.element/css/3.0/featuredPosts.css?ver=3.0" id="cnn-featured-posts-css" rel="stylesheet">
+<link media="screen" type="text/css" href="http://i.cdn.turner.com/cnn/.element/css/3.0/personalization.css?ver=3.0" id="cnn-personalization-css" rel="stylesheet">
+<link media="all" type="text/css" href="http://s1.wp.com/_static/??-eJx9jtEKwjAMRX/ImYmz4oP4LV0b0mrTlLVjv784EARlbzfhnJvAUjonuWFuwHNX0kwxV3Ayoe652AZKMPpoMSErdnS1HuC/xsV8rHcM1r3qHj/hmIQ0Eij1Nf5ILejxCmEASjLatNe6RE/Y6lZJIn5C67c3Hnw/nW+mH669uTxXTylccw==" id="all-css-10" rel="stylesheet">
+<script src="http://z.cdn.turner.com/cnn/.e1m/feed/newday/data.js?ver=3.0" type="text/javascript"></script>
+<script src="http://s0.wp.com/_static/??-eJyFzVEKwjAMgOEL2RUnOvYgnqXWOBLXtDbphp7eDhQUhD0Fko/8dk7GR1ZgtSQ2xDOOYIpAdkPdGeRrbEg2tjpkP5YLyALpXiA/3mMVmIBDdgpNQP7gr2qKogFEavLP9TeFPCHMq4xAk/M3k0HwuXw9heN21+8PXde3Lb0AKZZb3Q==" type="text/javascript"></script>
+<script src="http://z.cdn.turner.com/cnn/tmpl_asset/static/blog/339/js/bloglib-min.js?ver=1376575537" type="text/javascript"></script>
+<script src="http://z.cdn.turner.com/cnn/.element/js/3.0/swfobject-2.2.js?ver=3.9-beta2-27714" type="text/javascript"></script>
+<script src="http://i.cdn.turner.com/cnn/.element/js/3.0/easing.js?ver=3.9-beta2-27714" type="text/javascript"></script>
+<script src="http://i.cdn.turner.com/cnn/.element/js/3.0/article.js?ver=3" type="text/javascript"></script>
+<link href="http://cnnpoliticalticker.wordpress.com/xmlrpc.php?rsd" title="RSD" type="application/rsd+xml" rel="EditURI">
+<link href="http://cnnpoliticalticker.wordpress.com/wp-includes/wlwmanifest.xml" type="application/wlwmanifest+xml" rel="wlwmanifest"> 
+<link href="http://politicalticker.blogs.cnn.com/2014/04/07/white-house-counsel-set-to-leave-in-may/" title="White House counsel set to leave in May" rel="prev">
+<link href="http://politicalticker.blogs.cnn.com/2014/04/07/poll-rate-of-uninsured-americans-drops/" title="Poll: Rate of uninsured Americans drops" rel="next">
+<meta content="WordPress.com" name="generator">
+<link href="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/" rel="canonical">
+<link href="http://wp.me/p4HKM-1g1T" rel="shortlink">
+<link href="https://public-api.wordpress.com/oembed/1.0/?format=json&amp;url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;for=wpcom-auto-discovery" type="application/json+oembed" rel="alternate"><link href="https://public-api.wordpress.com/oembed/1.0/?format=xml&amp;url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;for=wpcom-auto-discovery" type="application/xml+oembed" rel="alternate"><link href="http://cnnpoliticalticker.wordpress.com/?openidserver=1" rel="openid.server">
+<link href="http://cnnpoliticalticker.wordpress.com/" rel="openid.delegate">
+<link title="CNN Political Ticker" href="http://politicalticker.blogs.cnn.com/osd.xml" type="application/opensearchdescription+xml" rel="search">
+<link title="WordPress.com" href="http://wordpress.com/opensearch.xml" type="application/opensearchdescription+xml" rel="search">
+
+<script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none !important;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta content="CNN Political Ticker" name="application-name"><meta content="width=device-width;height=device-height" name="msapplication-window"><meta content="- All politics, all the time" name="msapplication-tooltip"><meta content="name=Subscribe;action-uri=http://politicalticker.blogs.cnn.com/feed/;icon-uri=http://s2.wp.com/i/favicon.ico" name="msapplication-task"><meta content="Hillary Clinton poses with Pussy Riot members" property="og:title" itemprop="name">
+<meta content="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/" property="og:url" itemprop="url">
+<meta content="article" property="og:type">
+<meta content="690014395" property="fb:admins">
+<meta content="80401312489" property="fb:app_id">
+<meta content="(CNN) -- A photo of Hillary Clinton and members of the Russian pop band Pussy Riot has gone viral, with more than 9,000 retweets on Twitter and over 10,000 &quot;favorites." property="og:description" itemprop="description">
+<meta content="http://i2.cdn.turner.com/cnn/dam/assets/140407083809-01-hillary-clinton-0407-story-top.png" property="og:image" itemprop="image">
+<style id="syntaxhighlighteranchor" type="text/css"></style>
+
+
+		<script>
+		/* &lt;![CDATA[ */
+			function cnnVideo(mode, arg, expiration) {
+			top.location.href = "http://www.cnn.com/video/#" + arg ;
+			}
+		/* ]]&gt; */
+		</script>
+		<script type="text/javascript">
+		// &lt;![CDATA[
+			if(! window.com) { window.com = {}; }
+			if(! window.com.cnn) { window.com.cnn = {}; }
+			if(! window.com.cnn.blogs) { window.com.cnn.blogs = {}; }
+			if(! window.com.cnn.blogs.belief) { window.com.cnn.blogs.belief = {}; }
+			if(! window.com.cnn.blogs.belief.featuredPosts) { window.com.cnn.blogs.belief.featuredPosts = {}; }
+			if(! window.com.cnn.blogs.belief.featuredPosts.util) { window.com.cnn.blogs.belief.featuredPosts.util = {}; }
+
+			com.cnn.blogs.belief.featuredPosts.util.transformList = function(args) {
+				var settings = Object.extend({
+					galleryContainerId : "cnn_GallerySliderContainer",
+					galleryStripClass : "cnn_fabcaslab",
+					galleryCatClass : "cnn_fabcatz",
+					size : 4
+				}, args);
+
+				var grps = $$("#" + settings.galleryContainerId + " ul li").inGroupsOf(settings.size);
+				var slides = grps.inject([], function(slds, v, i) {
+					var li = v.inject([], function(lis, v, i) {
+						var link, img, title;
+
+						if(v === null) { return lis; }
+
+						// TRANSFORM ENTRY
+						link = v.down().href;
+						img = v.down('img').remove();
+						title = "&lt;a href='" + link + "'&gt;" + v.down().innerHTML + "&lt;/" + "a&gt;";
+
+						img = img.wrap('a', { 'href' : link });
+						img = img.wrap('blockquote');
+						v.update();
+						v.insert(img);
+						v.insert(title);
+						// TRANSFORM ENTRY
+
+						lis += "&lt;div class='"+ settings.galleryCatClass + "'&gt;" + v.innerHTML  + "&lt;/" + "div&gt;";
+
+						return lis;
+					});
+
+					slds += "&lt;div class='" + settings.galleryStripClass + "'&gt;" + li + "&lt;/" + "div&gt;";
+					return slds;
+				});
+
+				$(settings.galleryContainerId).update(slides);
+			};
+
+			com.cnn.blogs.belief.randomBanner = function() {
+				var randBanner = "banner" + (Math.floor(Math.random()*4) + 1);
+
+				if(null !== $("cnn-banner")) {
+					$("cnn-banner").addClassName(randBanner);
+				}
+
+				if(null !== $$("#cnnContentContainer .cnnGradWrap")) {
+					Element.addClassName($$("#cnnContentContainer .cnnGradWrap")[0], randBanner);
+				}
+			}
+
+			document.observe("dom:loaded", function() {
+
+				com.cnn.blogs.belief.randomBanner();
+
+				if ( $$('#cnn-ireport-viewer #cnn-ireport-container').length &gt; 0 &amp;&amp; typeof com.cnn.blogs.featuredPosts.ireport !== "object") {
+
+					com.cnn.blogs.featuredPosts.ireport = new com.cnn.blogs.featuredPosts.FeaturedPosts({
+						'galleryContainerId' : 'cnn-ireport-container',
+						'galleryStripClass' : 'cnn-ireport-slab',
+						'nextButtonContainerId' : 'cnn-ireport-next',
+						'prevButtonContainerId' : 'cnn-ireport-prev',
+						'displayWidth' : 300					});
+					Effect.Appear('cnn-ireport-viewer' );
+				}
+			});
+		// ]]&gt;
+		</script>
+		<script>
+		// &lt;![CDATA[
+						var cnnCVPAdSection = "cnn.com_blogs_politicalticker"; // if AD SECTION is EMPTY ('') or missing then this will be used
+		// ]]&gt;
+		</script>
+	<style type="text/css">.ob-tcolor{color:rgb(51, 51, 51)} .ob-lcolor{color:rgb(0, 66, 118)} .ob-bgtcolor{background-color:rgb(51, 51, 51)} .item-link-container:hover .ob-tcolor{border-color:rgb(51, 51, 51)}</style><script src="http://platform.linkedin.com/js/nonSecureAnonymousFramework?v=0.0.1194-RC8.34073-1411&amp;"></script><style type="text/css">* html #li_ui_li_gen_1396881418473_0 a#li_ui_li_gen_1396881418473_0-link{height:1% !important;}#li_ui_li_gen_1396881418473_0{position:relative !important;overflow:visible !important;display:block !important;}#li_ui_li_gen_1396881418473_0 a#li_ui_li_gen_1396881418473_0-link{border:0 !important;height:20px !important;text-decoration:none !important;padding:0 !important;margin:0 !important;display:inline-block !important;}#li_ui_li_gen_1396881418473_0 a#li_ui_li_gen_1396881418473_0-link:link, #li_ui_li_gen_1396881418473_0 a#li_ui_li_gen_1396881418473_0-link:visited, #li_ui_li_gen_1396881418473_0 a#li_ui_li_gen_1396881418473_0-link:hover, #li_ui_li_gen_1396881418473_0 a#li_ui_li_gen_1396881418473_0-link:active{border:0 !important;text-decoration:none !important;}#li_ui_li_gen_1396881418473_0 a#li_ui_li_gen_1396881418473_0-link:after{content:"." !important;display:block !important;clear:both !important;visibility:hidden !important;line-height:0 !important;height:0 !important;}#li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-logo{background-image:url(http://s.c.lnkd.licdn.com/scds/common/u/images/apps/connect/sprites/sprite_connect_v14.png) !important;background-position:0px -276px !important;background-repeat:no-repeat !important;background-size:initial !important;cursor:pointer !important;border:0 !important;text-indent:-9999em !important;overflow:hidden !important;padding:0 !important;margin:0 !important;position:absolute !important;left:0px !important;top:0px !important;display:block !important;width:20px !important;height:20px !important;float:right !important;border-radius:0 !important;-moz-border-radius:0 !important;border-top-right-radius:2px !important;border-bottom-right-radius:2px !important;-moz-border-radius-topright:2px !important;-moz-border-radius-bottomright:2px !important;}#li_ui_li_gen_1396881418473_0.hovered #li_ui_li_gen_1396881418473_0-logo{background-position:-20px -276px !important;}#li_ui_li_gen_1396881418473_0.clicked #li_ui_li_gen_1396881418473_0-logo, #li_ui_li_gen_1396881418473_0.down #li_ui_li_gen_1396881418473_0-logo{background-position:-40px -276px !important;}.IN-shadowed #li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-logo{}#li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-title{color:#333 !important;cursor:pointer !important;display:block !important;white-space:nowrap !important;float:left !important;margin-left:1px !important;vertical-align:top !important;overflow:hidden !important;text-align:center !important;height:18px !important;padding:0 4px 0 23px !important;border:1px solid #000 !important;border-top-color:#E2E2E2 !important;border-right-color:#BFBFBF !important;border-bottom-color:#B9B9B9 !important;border-left-color:#E2E2E2 !important;border-left:0 !important;text-shadow:#FFFFFF -1px 1px 0 !important;line-height:20px !important;border-radius:0 !important;-moz-border-radius:0 !important;border-top-right-radius:2px !important;border-bottom-right-radius:2px !important;-moz-border-radius-topright:2px !important;-moz-border-radius-bottomright:2px !important;background-color:#ECECEC !important;background-image:-moz-linear-gradient(top, #FEFEFE 0%, #ECECEC 100%) !important;}#li_ui_li_gen_1396881418473_0.hovered #li_ui_li_gen_1396881418473_0-title{border:1px solid #000 !important;border-top-color:#ABABAB !important;border-right-color:#9A9A9A !important;border-bottom-color:#787878 !important;border-left-color:#04568B !important;border-left:0 !important;background-color:#EDEDED !important;background-image:-moz-linear-gradient(top, #EDEDED 0%, #DEDEDE 100%) !important;}#li_ui_li_gen_1396881418473_0.clicked #li_ui_li_gen_1396881418473_0-title, #li_ui_li_gen_1396881418473_0.down #li_ui_li_gen_1396881418473_0-title{color:#666 !important;border:1px solid #000 !important;border-top-color:#B6B6B6 !important;border-right-color:#B3B3B3 !important;border-bottom-color:#9D9D9D !important;border-left-color:#49627B !important;border-left:0 !important;background-color:#DEDEDE !important;background-image:-moz-linear-gradient(top, #E3E3E3 0%, #EDEDED 100%) !important;}.IN-shadowed #li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-title{}.IN-shadowed #li_ui_li_gen_1396881418473_0.hovered #li_ui_li_gen_1396881418473_0-title{}.IN-shadowed #li_ui_li_gen_1396881418473_0.clicked #li_ui_li_gen_1396881418473_0-title, .IN-shadowed #li_ui_li_gen_1396881418473_0.down #li_ui_li_gen_1396881418473_0-title{}#li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-title-text, #li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-title-text *{color:#333 !important;font-size:11px !important;font-family:Arial, sans-serif !important;font-weight:bold !important;font-style:normal !important;-webkit-font-smoothing:antialiased !important;display:inline-block !important;background:transparent none !important;vertical-align:top !important;height:18px !important;line-height:20px !important;float:none !important;}#li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-title-text strong{font-weight:bold !important;}#li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-title-text em{font-style:italic !important;}#li_ui_li_gen_1396881418473_0.hovered #li_ui_li_gen_1396881418473_0-title-text, #li_ui_li_gen_1396881418473_0.hovered #li_ui_li_gen_1396881418473_0-title-text *{color:#000 !important;}#li_ui_li_gen_1396881418473_0.clicked #li_ui_li_gen_1396881418473_0-title-text, #li_ui_li_gen_1396881418473_0.down #li_ui_li_gen_1396881418473_0-title-text, #li_ui_li_gen_1396881418473_0.clicked #li_ui_li_gen_1396881418473_0-title-text *, #li_ui_li_gen_1396881418473_0.down #li_ui_li_gen_1396881418473_0-title-text *{color:#666 !important;}#li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-title #li_ui_li_gen_1396881418473_0-mark{display:inline-block !important;width:0px !important;overflow:hidden !important;}.success #li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-title{color:#333 !important;border-top-color:#E2E2E2 !important;border-right-color:#BFBFBF !important;border-bottom-color:#B9B9B9 !important;border-left-color:#E2E2E2 !important;background-color:#ECECEC !important;background-image:-moz-linear-gradient(top, #FEFEFE 0%, #ECECEC 100%) !important;}.success #li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-title-text, .success #li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-title-text *{color:#333 !important;}.IN-shadowed .success #li_ui_li_gen_1396881418473_0 #li_ui_li_gen_1396881418473_0-title{}.success #li_ui_li_gen_1396881418473_0.hovered #li_ui_li_gen_1396881418473_0-title{color:#000 !important;border-top-color:#ABABAB !important;border-right-color:#9A9A9A !important;border-bottom-color:#787878 !important;border-left-color:#04568B !important;background-color:#EDEDED !important;background-image:-moz-linear-gradient(top, #EDEDED 0%, #DEDEDE 100%) !important;}.success #li_ui_li_gen_1396881418473_0.hovered #li_ui_li_gen_1396881418473_0-title-text, .success #li_ui_li_gen_1396881418473_0.hovered #li_ui_li_gen_1396881418473_0-title-text *{color:#000 !important;}.success #li_ui_li_gen_1396881418473_0.clicked #li_ui_li_gen_1396881418473_0-title, .success #li_ui_li_gen_1396881418473_0.down #li_ui_li_gen_1396881418473_0-title{color:#666 !important;border-top-color:#B6B6B6 !important;border-right-color:#B3B3B3 !important;border-bottom-color:#9D9D9D !important;border-left-color:#49627B !important;background-color:#DEDEDE !important;background-image:-moz-linear-gradient(top, #E3E3E3 0%, #EDEDED 100%) !important;}.success #li_ui_li_gen_1396881418473_0.clicked #li_ui_li_gen_1396881418473_0-title-text, .success #li_ui_li_gen_1396881418473_0.down #li_ui_li_gen_1396881418473_0-title-text, .success #li_ui_li_gen_1396881418473_0.clicked #li_ui_li_gen_1396881418473_0-title-text *, .success #li_ui_li_gen_1396881418473_0.down #li_ui_li_gen_1396881418473_0-title-text *{color:#666 !important;}.IN-shadowed .success #li_ui_li_gen_1396881418473_0.clicked #li_ui_li_gen_1396881418473_0-title, .IN-shadowed .success #li_ui_li_gen_1396881418473_0.down #li_ui_li_gen_1396881418473_0-title{}#li_ui_li_gen_1396881418558_1-container.IN-top {display:inline-block !important;overflow:visible !important;position:relative !important;height:42px !important;line-height:1px !important;cursor:pointer !important;}#li_ui_li_gen_1396881418558_1.IN-top {display:inline-block !important;height:42px !important;width:57px !important;text-align:center !important;background-image:url(http://s.c.lnkd.licdn.com/scds/common/u/images/apps/connect/sprites/sprite_connect_v14.png) !important;background-color:transparent !important;background-repeat:no-repeat !important;background-position:-150px top !important;}#li_ui_li_gen_1396881418558_1-content.IN-top {display:inline !important;font-size:16px !important;color:#04558B !important;font-weight:bold !important;font-family:Arial, sans-serif !important;line-height:38px !important;}#li_ui_li_gen_1396881418558_1-container.IN-empty #li_ui_li_gen_1396881418558_1-inner.IN-top {background-image:url(http://s.c.lnkd.licdn.com/scds/common/u/images/apps/connect/sprites/sprite_connect_v14.png) !important;background-color:transparent !important;background-repeat:no-repeat !important;background-position:0px -20px !important;overflow:hidden !important;margin:5px auto 0 auto !important;width:26px !important;height:26px !important;display:block !important;}#li_ui_li_gen_1396881418558_1-container.IN-empty #li_ui_li_gen_1396881418558_1-content.IN-top {text-indent:-999px !important;display:inline-block !important;}#li_ui_li_gen_1396881418558_1-container.IN-hidden #li_ui_li_gen_1396881418558_1 {display:none !important;}* html #li_ui_li_gen_1396881418583_2 a#li_ui_li_gen_1396881418583_2-link{height:1% !important;}#li_ui_li_gen_1396881418583_2{position:relative !important;overflow:visible !important;display:block !important;}#li_ui_li_gen_1396881418583_2 a#li_ui_li_gen_1396881418583_2-link{border:0 !important;height:20px !important;text-decoration:none !important;padding:0 !important;margin:0 !important;display:inline-block !important;}#li_ui_li_gen_1396881418583_2 a#li_ui_li_gen_1396881418583_2-link:link, #li_ui_li_gen_1396881418583_2 a#li_ui_li_gen_1396881418583_2-link:visited, #li_ui_li_gen_1396881418583_2 a#li_ui_li_gen_1396881418583_2-link:hover, #li_ui_li_gen_1396881418583_2 a#li_ui_li_gen_1396881418583_2-link:active{border:0 !important;text-decoration:none !important;}#li_ui_li_gen_1396881418583_2 a#li_ui_li_gen_1396881418583_2-link:after{content:"." !important;display:block !important;clear:both !important;visibility:hidden !important;line-height:0 !important;height:0 !important;}#li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-logo{background-image:url(http://s.c.lnkd.licdn.com/scds/common/u/images/apps/connect/sprites/sprite_connect_v14.png) !important;background-position:0px -276px !important;background-repeat:no-repeat !important;background-size:initial !important;cursor:pointer !important;border:0 !important;text-indent:-9999em !important;overflow:hidden !important;padding:0 !important;margin:0 !important;position:absolute !important;left:0px !important;top:0px !important;display:block !important;width:20px !important;height:20px !important;float:right !important;border-radius:0 !important;-moz-border-radius:0 !important;border-top-right-radius:2px !important;border-bottom-right-radius:2px !important;-moz-border-radius-topright:2px !important;-moz-border-radius-bottomright:2px !important;}#li_ui_li_gen_1396881418583_2.hovered #li_ui_li_gen_1396881418583_2-logo{background-position:-20px -276px !important;}#li_ui_li_gen_1396881418583_2.clicked #li_ui_li_gen_1396881418583_2-logo, #li_ui_li_gen_1396881418583_2.down #li_ui_li_gen_1396881418583_2-logo{background-position:-40px -276px !important;}.IN-shadowed #li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-logo{}#li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-title{color:#333 !important;cursor:pointer !important;display:block !important;white-space:nowrap !important;float:left !important;margin-left:1px !important;vertical-align:top !important;overflow:hidden !important;text-align:center !important;height:18px !important;padding:0 4px 0 23px !important;border:1px solid #000 !important;border-top-color:#E2E2E2 !important;border-right-color:#BFBFBF !important;border-bottom-color:#B9B9B9 !important;border-left-color:#E2E2E2 !important;border-left:0 !important;text-shadow:#FFFFFF -1px 1px 0 !important;line-height:20px !important;border-radius:0 !important;-moz-border-radius:0 !important;border-top-right-radius:2px !important;border-bottom-right-radius:2px !important;-moz-border-radius-topright:2px !important;-moz-border-radius-bottomright:2px !important;background-color:#ECECEC !important;background-image:-moz-linear-gradient(top, #FEFEFE 0%, #ECECEC 100%) !important;}#li_ui_li_gen_1396881418583_2.hovered #li_ui_li_gen_1396881418583_2-title{border:1px solid #000 !important;border-top-color:#ABABAB !important;border-right-color:#9A9A9A !important;border-bottom-color:#787878 !important;border-left-color:#04568B !important;border-left:0 !important;background-color:#EDEDED !important;background-image:-moz-linear-gradient(top, #EDEDED 0%, #DEDEDE 100%) !important;}#li_ui_li_gen_1396881418583_2.clicked #li_ui_li_gen_1396881418583_2-title, #li_ui_li_gen_1396881418583_2.down #li_ui_li_gen_1396881418583_2-title{color:#666 !important;border:1px solid #000 !important;border-top-color:#B6B6B6 !important;border-right-color:#B3B3B3 !important;border-bottom-color:#9D9D9D !important;border-left-color:#49627B !important;border-left:0 !important;background-color:#DEDEDE !important;background-image:-moz-linear-gradient(top, #E3E3E3 0%, #EDEDED 100%) !important;}.IN-shadowed #li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-title{}.IN-shadowed #li_ui_li_gen_1396881418583_2.hovered #li_ui_li_gen_1396881418583_2-title{}.IN-shadowed #li_ui_li_gen_1396881418583_2.clicked #li_ui_li_gen_1396881418583_2-title, .IN-shadowed #li_ui_li_gen_1396881418583_2.down #li_ui_li_gen_1396881418583_2-title{}#li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-title-text, #li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-title-text *{color:#333 !important;font-size:11px !important;font-family:Arial, sans-serif !important;font-weight:bold !important;font-style:normal !important;-webkit-font-smoothing:antialiased !important;display:inline-block !important;background:transparent none !important;vertical-align:top !important;height:18px !important;line-height:20px !important;float:none !important;}#li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-title-text strong{font-weight:bold !important;}#li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-title-text em{font-style:italic !important;}#li_ui_li_gen_1396881418583_2.hovered #li_ui_li_gen_1396881418583_2-title-text, #li_ui_li_gen_1396881418583_2.hovered #li_ui_li_gen_1396881418583_2-title-text *{color:#000 !important;}#li_ui_li_gen_1396881418583_2.clicked #li_ui_li_gen_1396881418583_2-title-text, #li_ui_li_gen_1396881418583_2.down #li_ui_li_gen_1396881418583_2-title-text, #li_ui_li_gen_1396881418583_2.clicked #li_ui_li_gen_1396881418583_2-title-text *, #li_ui_li_gen_1396881418583_2.down #li_ui_li_gen_1396881418583_2-title-text *{color:#666 !important;}#li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-title #li_ui_li_gen_1396881418583_2-mark{display:inline-block !important;width:0px !important;overflow:hidden !important;}.success #li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-title{color:#333 !important;border-top-color:#E2E2E2 !important;border-right-color:#BFBFBF !important;border-bottom-color:#B9B9B9 !important;border-left-color:#E2E2E2 !important;background-color:#ECECEC !important;background-image:-moz-linear-gradient(top, #FEFEFE 0%, #ECECEC 100%) !important;}.success #li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-title-text, .success #li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-title-text *{color:#333 !important;}.IN-shadowed .success #li_ui_li_gen_1396881418583_2 #li_ui_li_gen_1396881418583_2-title{}.success #li_ui_li_gen_1396881418583_2.hovered #li_ui_li_gen_1396881418583_2-title{color:#000 !important;border-top-color:#ABABAB !important;border-right-color:#9A9A9A !important;border-bottom-color:#787878 !important;border-left-color:#04568B !important;background-color:#EDEDED !important;background-image:-moz-linear-gradient(top, #EDEDED 0%, #DEDEDE 100%) !important;}.success #li_ui_li_gen_1396881418583_2.hovered #li_ui_li_gen_1396881418583_2-title-text, .success #li_ui_li_gen_1396881418583_2.hovered #li_ui_li_gen_1396881418583_2-title-text *{color:#000 !important;}.success #li_ui_li_gen_1396881418583_2.clicked #li_ui_li_gen_1396881418583_2-title, .success #li_ui_li_gen_1396881418583_2.down #li_ui_li_gen_1396881418583_2-title{color:#666 !important;border-top-color:#B6B6B6 !important;border-right-color:#B3B3B3 !important;border-bottom-color:#9D9D9D !important;border-left-color:#49627B !important;background-color:#DEDEDE !important;background-image:-moz-linear-gradient(top, #E3E3E3 0%, #EDEDED 100%) !important;}.success #li_ui_li_gen_1396881418583_2.clicked #li_ui_li_gen_1396881418583_2-title-text, .success #li_ui_li_gen_1396881418583_2.down #li_ui_li_gen_1396881418583_2-title-text, .success #li_ui_li_gen_1396881418583_2.clicked #li_ui_li_gen_1396881418583_2-title-text *, .success #li_ui_li_gen_1396881418583_2.down #li_ui_li_gen_1396881418583_2-title-text *{color:#666 !important;}.IN-shadowed .success #li_ui_li_gen_1396881418583_2.clicked #li_ui_li_gen_1396881418583_2-title, .IN-shadowed .success #li_ui_li_gen_1396881418583_2.down #li_ui_li_gen_1396881418583_2-title{}#li_ui_li_gen_1396881418592_3-container.IN-top {display:inline-block !important;overflow:visible !important;position:relative !important;height:42px !important;line-height:1px !important;cursor:pointer !important;}#li_ui_li_gen_1396881418592_3.IN-top {display:inline-block !important;height:42px !important;width:57px !important;text-align:center !important;background-image:url(http://s.c.lnkd.licdn.com/scds/common/u/images/apps/connect/sprites/sprite_connect_v14.png) !important;background-color:transparent !important;background-repeat:no-repeat !important;background-position:-150px top !important;}#li_ui_li_gen_1396881418592_3-content.IN-top {display:inline !important;font-size:16px !important;color:#04558B !important;font-weight:bold !important;font-family:Arial, sans-serif !important;line-height:38px !important;}#li_ui_li_gen_1396881418592_3-container.IN-empty #li_ui_li_gen_1396881418592_3-inner.IN-top {background-image:url(http://s.c.lnkd.licdn.com/scds/common/u/images/apps/connect/sprites/sprite_connect_v14.png) !important;background-color:transparent !important;background-repeat:no-repeat !important;background-position:0px -20px !important;overflow:hidden !important;margin:5px auto 0 auto !important;width:26px !important;height:26px !important;display:block !important;}#li_ui_li_gen_1396881418592_3-container.IN-empty #li_ui_li_gen_1396881418592_3-content.IN-top {text-indent:-999px !important;display:inline-block !important;}#li_ui_li_gen_1396881418592_3-container.IN-hidden #li_ui_li_gen_1396881418592_3 {display:none !important;}</style><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset&gt;div{overflow:hidden}.fb_link img{border:none}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_close_icon:active{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_loader{background-color:#f2f2f2;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #3b5998;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title&gt;span{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{max-height:590px;min-height:590px;max-width:500px;min-width:500px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;left:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29447e;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f2f2f2;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}
+.fb_connect_bar_container div,.fb_connect_bar_container span,.fb_connect_bar_container a,.fb_connect_bar_container img,.fb_connect_bar_container strong{background:none;border-spacing:0;border:0;direction:ltr;font-style:normal;font-variant:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal;vertical-align:baseline}.fb_connect_bar_container{position:fixed;left:0 !important;right:0 !important;height:42px !important;padding:0 25px !important;margin:0 !important;vertical-align:middle !important;border-bottom:1px solid #333 !important;background:#3b5998 !important;z-index:99999999 !important;overflow:hidden !important}.fb_connect_bar_container_ie6{position:absolute;top:expression(document.compatMode=="CSS1Compat"? document.documentElement.scrollTop+"px":body.scrollTop+"px")}.fb_connect_bar{position:relative;margin:auto;height:100%;width:100%;padding:6px 0 0 0 !important;background:none;color:#fff !important;font-family:"lucida grande", tahoma, verdana, arial, sans-serif !important;font-size:13px !important;font-style:normal !important;font-variant:normal !important;font-weight:normal !important;letter-spacing:normal !important;line-height:1 !important;text-decoration:none !important;text-indent:0 !important;text-shadow:none !important;text-transform:none !important;white-space:normal !important;word-spacing:normal !important}.fb_connect_bar a:hover{color:#fff}.fb_connect_bar .fb_profile img{height:30px;width:30px;vertical-align:middle;margin:0 6px 5px 0}.fb_connect_bar div a,.fb_connect_bar span,.fb_connect_bar span a{color:#bac6da;font-size:11px;text-decoration:none}.fb_connect_bar .fb_buttons{float:right;margin-top:7px}
+.fbpluginrecommendationsbarleft,.fbpluginrecommendationsbarright{position:fixed !important;bottom:0;z-index:999}.fbpluginrecommendationsbarleft{left:10px}.fbpluginrecommendationsbarright{right:10px}</style></head>
+		<body class="single single-post postid-299949 single-format-standard politicalticker mp6 typekit-enabled no-svg category-hillary-clinton category-russia" data-twttr-rendered="true"><iframe scrolling="no" frameborder="0" id="twttrHubFrameSecure" allowtransparency="true" tabindex="0" name="twttrHubFrameSecure" style="position: absolute; top: -9999em; width: 10px; height: 10px;" src="https://platform.twitter.com/widgets/hub.html"></iframe><iframe scrolling="no" frameborder="0" id="twttrHubFrame" allowtransparency="true" tabindex="0" name="twttrHubFrame" style="position: absolute; top: -9999em; width: 10px; height: 10px;" src="http://platform.twitter.com/widgets/hub.html"></iframe><script type="text/javascript" src="http://pix04.revsci.net/A09801/b3/0/3/120814/42313067.js?D=DM_LOC%3Dhttp%253A%252F%252Fpoliticalticker.blogs.cnn.com%252F2014%252F04%252F07%252Fhillary-clinton-poses-with-pussy-riot-members%252F%253Fundefined%253Dundefined%2526_rsiL%253D0%26DM_CAT%3Dcnn%2520%253E%2520politics%2520%253E%2520political_ticker%26DM_EOM%3D1&amp;C=A09801"></script>
+		<!-- begin header --><div id="cnn_hdr">	<div style="display: none" id="cnn_hdr-prompt">		<div class="hdr-wrap">			<a id="hdr-prompt-text" title="" href="javascript:void(0)">Not from the U.S.? Click here to go to our international version			<img width="18" height="25" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/global/header/hdr-arrow.jpg" id="hdr-arrow-us"></a>			<a id="hdr-prompt-close" title="" href="javascript:void(0)">Close&nbsp;<img width="7" height="7" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/global/header/hdr-close.jpg"></a>		</div>	</div>	<div id="cnn_hdr-main">		<div class="hdr-wrap">			<div id="hdr-banner">									<a title="" href="http://www.cnn.com/POLITICS/" id="hdr-banner-title">						<img width="230" height="82" usemap="#cnn_hdrimap" alt="CNN Politics" src="http://i.cdn.turner.com/cnn/.element/img/3.0/global/header/us/hdr-politics.gif">					</a>					<map name="cnn_hdrimap"><area href="http://www.cnn.com/" coords="-8,14,82,65" alt=""><area href="http://www.cnn.com/POLITICS/" coords="87,17,229,68" alt=""></map></div>						<div id="hdr-editions">
+				<ul>
+					<li class="no-pad-left"><span>EDITION: &nbsp;U.S.</span></li>
+					<li><a title="CNN INTERNATIONAL" href="http://edition.cnn.com/" id="cnn_switchEdition_intl">INTERNATIONAL</a></li>
+					<li><a title="CNN MÉXICO" href="http://www.cnnmexico.com/">MÉXICO</a></li>
+					<li class="no-border"><a href="http://arabic.cnn.com/" title="ARABIC">ARABIC</a></li>
+				</ul>
+				<div class="cnn_clear"></div>
+				<div style="padding-top:2px;">
+					<ul>
+						<li class="no-pad-left no-border no-pad-right"><span><a href="http://www.cnn.com/CNN/Programs" class="cnn_hdr-editionlnk">TV</a>: &nbsp;</span></li>
+						<li class="no-pad-left"><a href="http://www.cnn.com/CNN/Programs/">CNN</a></li>
+						<li class=""><a href="http://www.cnn.com/CNNI/">CNNi</a></li>
+						<li><a href="http://cnnespanol.cnn.com/">CNN en Español</a></li>
+						<li class="no-border"><a href="http://www.hlntv.com/">HLN</a></li>
+					</ul>
+				</div>
+			</div>			<div style="display:none;" id="hdr-auth">								<ul>
+					<li><a title="" onclick="showOverlay('profile_signup_overlay');return false;" href="javascript:void(0)">Sign up</a></li>
+					<li class="no-border no-pad-right"><a title="" onclick="showOverlay('profile_signin_overlay');return false;" href="javascript:void(0)">Log in</a></li>
+				</ul>			</div>			<div id="hdr-search">				<form onsubmit="return cnnSearch(this);" action="http://www.cnn.com/search/" method="get">					
+					<div class="ftr-search-datacntr">
+<div class="ftr-search-tfield"><input type="text" value="" maxlength="40" size="12" name="query"></div>
+<div class="ftr-search-sicon"><input width="55" type="image" height="21" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/search/btn_search_hp_text.gif"></div>
+</div>
+
+			<input type="hidden" value="mixed" id="cnnHeadSrchType" name="primaryType">					</form>			</div>		</div>	</div>	<div id="cnn_hdr-nav">		<ul id="us-menu">			<li class="no-border"><a title="Breaking News, U.S., World Weather Entertainment and  Video News from CNN.com" href="http://www.cnn.com/" class="nav-media no-border" id="nav-home">Home</a></li>			<li class="no-border"><a title="Video Breaking News Videos from CNN.com" href="http://www.cnn.com/video/" class="nav-media no-border" id="nav-video">TV &amp; Video</a></li>			<li class="no-border"><a title="CNN Trends powered by Zite" href="http://cnn.com/trends/" class="nav-media no-border" id="nav-trends">CNN Trends</a></li><li><a title="U.S. News Headlines Stories and Video from CNN.com" href="http://www.cnn.com/US/" id="nav-us">U.S.</a></li>			<li><a title="World News International Headlines Stories and Video from CNN.com" href="http://www.cnn.com/WORLD/" id="nav-world">World</a></li><li><a title="Election and Politics News from CNN.com" href="http://www.cnn.com/POLITICS/" class="nav-on" id="nav-politics">Politics</a></li><li><a title="Justice News Courts Celebrity Docket and Law News from CNN.com" href="http://www.cnn.com/JUSTICE/" id="nav-justice">Justice</a></li><li><a title="Entertainment News Celebrities Movies and TV from CNN.com" href="http://www.cnn.com/SHOWBIZ/" id="nav-entertainment">Entertainment</a></li>			<li><a title="Technology Computers Internet and Personal Tech News from CNN.com" href="http://www.cnn.com/TECH/" id="nav-tech">Tech</a></li>			<li><a title="Health News Medicine Diet Fitness and Parenting from CNN.com" href="http://www.cnn.com/HEALTH/" id="nav-health">Health</a></li>			<li><a title="Living News Personal Work and Home from CNN.com" href="http://www.cnn.com/LIVING/" id="nav-living">Living</a></li>			<li><a title="Travel News Vacations Destinations and Video from CNN.com" href="http://www.cnn.com/TRAVEL/" id="nav-travel">Travel</a></li>			<li><a title="Opinion Editorial Analysis and Insight from CNN.com" href="http://www.cnn.com/OPINION/" id="nav-opinion">Opinion</a></li>			<li><a title="CNN iReport &ndash; Share your story, discuss the issues with CNN.com" href="http://ireport.cnn.com/" id="nav-ireport">iReport</a></li>			<li><a title="Business financial personal finance news from CNNMoney" href="http://money.cnn.com/?cnn=yes" id="nav-money"><span>Money</span><img width="3" height="5" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/global/header/nav-arrow.gif"></a></li>			<li><a title="The latest sports news and insights on all of your teams and today's hot topics from Bleacher Report (BleacherReport.com)." href="http://bleacherreport.com/?utm_source=cnn.com&amp;utm_medium=referral&amp;utm_campaign=cnn-nav" id="nav-sports"><span>Sports</span><img width="3" height="5" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/global/header/nav-arrow.gif"></a></li>
+			<!--include virtual="/.element/ssi/www/misc/3.0/header/menu.bleacher.static.html"-->			</ul>	</div></div><!-- end header -->
+<style type="text/css">#hdr-editions a.cnn_hdr-editionlnk{position:static;color:#fff}#hdr-editions a{text-decoration:none}#hdr-editions span{font-size:12px}#cnn_hdr *{font-size:1.04em}</style>
+		<div id="cnn-bodywrap">
+		<div align="center" class="cnn_container cnn-blog-main cnn_brkt_1" id="cnnContainer">
+			<div class="cnn_brkt_2">
+				<div class="cnn_brkt_3">
+					<div class="cnn_brkt_4">
+						<div class="large-background-cover cnn_maincntnr">
+							<div class="cnn_contentarea">
+								<div id="cnnContentContainer">
+									<div class="cnn_contentarea">
+									<!-- CONTENT START -->
+	
+		<!-- CONTENT TOP AREA -->
+	<div class="cnn_content_top">
+
+	
+		<!-- STANDARD HEADER -->
+		<div class="cnn_std_header">
+						<div class="cnn_std_header_image_bx">
+												<a title="- All politics, all the time" href="http://politicalticker.blogs.cnn.com" class="banner-link"><img alt="- All politics, all the time" src="http://i.cdn.turner.com/cnn/.element/img/3.0/sect/blogs/ac360/home.gif"></a>				<div class="cnn_showtime_label">
+									</div>
+			</div>
+			<!-- NAV -->
+			
+									<!-- / NAV -->
+		</div>
+		<!-- /STANDARD HEADER -->
+
+		<!-- STANDARD ROTATING T1 FEATURE -->
+				<!-- /STANDARD ROTATING T1 FEATURE -->
+
+		<!-- EVENTS -->
+				<!-- /EVENTS -->
+
+		
+		
+			<!-- STANDARD FLIPPER HOOK -->
+	<div style="" id="cnn-flipper-viewer">
+		<div class="cnn-nav"><img alt="Previous" src="http://i.cdn.turner.com/cnn/.element/img/3.0/1px.gif" id="cnn-flipper-prev" class="cnn_fabcprv_off"></div>
+		<div class="cnn_flipper_viewport" id="cnn-flipper-viewport">
+			<div id="cnn-flipper-container" style="width: 1890px;">
+				<div class="cnn-flipper-slab" id=""><div class="cnn-flipper-item cnn-first">
+				<blockquote class="cnn_vidplyb38x38_box">
+					<a href="http://politicalticker.blogs.cnn.com/category/cnns-gut-check/"><img alt="CNN's GUT CHECK" src="http://i2.cdn.turner.com/cnn/dam/assets/130611141805-obama-search-tease.jpg"></a>
+					
+				</blockquote>
+				<a href="http://politicalticker.blogs.cnn.com/category/cnns-gut-check/">CNN's GUT CHECK</a>
+			</div><div class="cnn-flipper-item">
+				<blockquote class="cnn_vidplyb38x38_box">
+					<a href="http://politicalticker.blogs.cnn.com/category/president-obama/"><img alt="White House News" src="http://i2.cdn.turner.com/cnn/dam/assets/130718155918-tiny-white-house-search-tease.jpg"></a>
+					
+				</blockquote>
+				<a href="http://politicalticker.blogs.cnn.com/category/president-obama/">White House News</a>
+			</div><div class="cnn-flipper-item">
+				<blockquote class="cnn_vidplyb38x38_box">
+					<a href="http://politicalticker.blogs.cnn.com/category/polls/cnnorc-international-poll/"><img alt="Latest CNN Polls" src="http://i2.cdn.turner.com/cnn/dam/assets/111013021633-voting-stickers-generic-search-tease.jpg"></a>
+					
+				</blockquote>
+				<a href="http://politicalticker.blogs.cnn.com/category/polls/cnnorc-international-poll/">Latest CNN Polls</a>
+			</div><div class="cnn-flipper-item">
+				<blockquote class="cnn_vidplyb38x38_box">
+					<a href="http://politicalticker.blogs.cnn.com/category/congress/"><img alt="News from Capitol Hill" src="http://i2.cdn.turner.com/cnn/dam/assets/111026112447-capitol-dome-search-tease.jpg"></a>
+					
+				</blockquote>
+				<a href="http://politicalticker.blogs.cnn.com/category/congress/">News from Capitol Hill</a>
+			</div><div class="cnn-flipper-item cnn-last">
+				<blockquote class="cnn_vidplyb38x38_box">
+					<a href="http://crossfire.blogs.cnn.com/"><img alt="Crossfire" src="http://i2.cdn.turner.com/cnn/dam/assets/130812114259-crossfire-logo-carousel-search-tease.jpg"></a>
+					
+				</blockquote>
+				<a href="http://crossfire.blogs.cnn.com/">Crossfire</a>
+			</div></div><div class="cnn-flipper-slab"><div class="cnn-flipper-item cnn-first">
+				<blockquote class="cnn_vidplyb38x38_box">
+					<a href="http://politicalticker.blogs.cnn.com/2013/04/08/gabby-giffords-still-loves-gun-culture/?hpt=hp_c4"><img alt="CNN Exclusive: Giffords still a gun fan" src="http://i2.cdn.turner.com/cnn/dam/assets/130409131728-sot-ac-bash-gabby-giffords-intvu-stronger-00001713-search-tease.jpg"></a>
+					
+				</blockquote>
+				<a href="http://politicalticker.blogs.cnn.com/2013/04/08/gabby-giffords-still-loves-gun-culture/?hpt=hp_c4">CNN Exclusive: Giffords still a gun fan</a>
+			</div><div class="cnn-flipper-item">
+				<blockquote class="cnn_vidplyb38x38_box">
+					<a href="http://politicalticker.blogs.cnn.com/2013/03/25/jim-carrey-mocks-charlton-heston/"><img alt="Jim Carrey mocks dead actor" src="http://i2.cdn.turner.com/cnn/dam/assets/130325173708-lead-carrey-gun-ad-00003604-search-tease.jpg"></a>
+					
+				</blockquote>
+				<a href="http://politicalticker.blogs.cnn.com/2013/03/25/jim-carrey-mocks-charlton-heston/">Jim Carrey mocks dead actor</a>
+			</div><div class="cnn-flipper-item">
+				<blockquote class="cnn_vidplyb38x38_box">
+					<a href="http://politicalticker.blogs.cnn.com/2013/03/27/oreilly-blasts-same-sex-marriage-critics/"><img alt="Fox anchor blasts same-sex marriage critics" src="http://i2.cdn.turner.com/cnn/dam/assets/120928041500-raines-fox-romney-search-tease.jpg"></a>
+					
+				</blockquote>
+				<a href="http://politicalticker.blogs.cnn.com/2013/03/27/oreilly-blasts-same-sex-marriage-critics/">Fox anchor blasts same-sex marriage critics</a>
+			</div><div class="cnn-flipper-item">
+				<blockquote class="cnn_vidplyb38x38_box">
+					<a href="http://politicalticker.blogs.cnn.com/2013/03/11/desperate-times-marines-told-to-save-every-round/"><img alt="Marines told: 'Save every round'" src="http://i2.cdn.turner.com/cnn/dam/assets/130311140031-marine-search-tease.jpg"></a>
+					
+				</blockquote>
+				<a href="http://politicalticker.blogs.cnn.com/2013/03/11/desperate-times-marines-told-to-save-every-round/">Marines told: 'Save every round'</a>
+			</div><div class="cnn-flipper-item cnn-last">
+				<blockquote class="cnn_vidplyb38x38_box">
+					<a href="http://politicalticker.blogs.cnn.com/2013/03/01/jedimindmeld-may-the-forced-spending-cuts-be-with-you/"><img alt="#JediMindMeld: May cuts be with you" src="http://i2.cdn.turner.com/cnn/dam/assets/130306135311-obama-saber-search-tease.jpg"></a>
+					
+				</blockquote>
+				<a href="http://politicalticker.blogs.cnn.com/2013/03/01/jedimindmeld-may-the-forced-spending-cuts-be-with-you/">#JediMindMeld: May cuts be with you</a>
+			</div></div>			</div>
+		</div>
+		<div class="cnn-nav"><img alt="Next" src="http://i.cdn.turner.com/cnn/.element/img/3.0/1px.gif" id="cnn-flipper-next" class="cnn_fabcnxt"></div>
+		<div class="cnn_clear"><img width="1" height="1" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/1px.gif"></div>
+	</div>
+	<script type="text/javascript">
+		/*&lt;![CDATA[*/
+		if(! window.com) { window.com = {}; }
+		if(! window.com.cnn) { window.com.cnn = {}; }
+		if(! window.com.cnn.blogs) { window.com.cnn.blogs = {}; }
+		if(! window.com.cnn.blogs.std) { window.com.cnn.blogs.std = {}; }
+
+		if ( $$('#cnn-flipper-viewer #cnn-flipper-container').length &gt; 0 &amp;&amp; typeof com.cnn.blogs.std.flipper !== "object") {
+			com.cnn.blogs.std.flipper = new com.cnn.blogs.featuredPosts.FeaturedPosts({
+				'galleryContainerId' : 'cnn-flipper-container',
+				'galleryStripClass' : 'cnn-flipper-slab',
+				'nextButtonContainerId' : 'cnn-flipper-next',
+				'prevButtonContainerId' : 'cnn-flipper-prev',
+				'displayWidth' : 945
+			});
+			Effect.Appear('cnn-flipper-viewer' );
+		}
+		/*]]&gt;*/
+	</script>
+	<!-- /STANDARD FLIPPER HOOK -->
+	
+        			<div class="cnn_clear"></div>
+			<!-- / NAV -->
+
+
+		
+
+		
+							</div>
+	<!-- /CONTENT TOP AREA -->
+		<div class="cnn_content_body cnn_blog_2col cnn_blog_2col_shdbx" id="cnnContentContainer2">
+		<!-- content -->
+		<div class="cnn_shdtop"><div class="cnn_gap"><img alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/1px.gif"></div></div>
+		<div class="cnn_shd1">
+			<div class="cnn_shd2">
+				<div class="cnn_shd3">
+					<div class="cnn_shd4">
+						<div class="cnn_left_column">
+							<div class="cnn_blog_content_area" id="cnnBlogContentArea">
+									<!-- blog post 299949 -->
+	
+	
+	<div class="cnnPostWrap cnn_wh1600_post_separator">
+		<div class="cnnWideImage">
+	<img width="640" height="360" alt="Hillary Clinton poses with Pussy Riot members" title="Hillary Clinton poses with Pussy Riot members" src="http://i2.cdn.turner.com/cnn/dam/assets/140407083809-01-hillary-clinton-0407-story-top.png">	</div>
+	<div class="post-299949 post type-post status-publish format-standard hentry category-hillary-clinton category-russia tag-cnn-political-unit cnn_ie7_background_fix">
+
+		
+		<div class="cnnLeftPost">
+			<div class="cnnFcIcon"></div>
+			<div class="cnnBlogContentDateHead">
+			April 7th, 2014			</div>
+		<div class="cnnGryTmeStmp">09:44 AM ET</div>
+
+			<div class="cnn_share_links">
+		<div class="cnnOverlayMenuContainer">
+			<div class="cnnOverlayMenu" id="cnnShare299949">
+				<div class="cnnShareThisBox">
+					<div class="cnnShareBoxHeader"><div class="cnnShareBoxHeaderTL"></div><div class="cnnShareBoxHeaderTR"></div></div>
+					<div class="cnnShareBoxContent">
+						<div class="cnnShareContent">
+							<div class="cnn_share_this_content">
+								<div class="cnnShareThisTitle">
+									<a href="javascript:cnnHideOverlay('cnnShare299949');"><img width="12" height="12" title="Close" alt="Close" src="http://i.cdn.turner.com/cnn/.element/img/2.0/global/icons/btn_close.gif"></a><span>Share this on:</span>
+								</div>
+								<div class="cnnShareThisItem">
+									<a target="_blank" href="http://www.facebook.com/share.php?u=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F" title="Share Hillary Clinton poses with Pussy Riot members on Facebook" class="cnnShareFacebook">Facebook</a>
+								</div>
+								<div class="cnnShareThisItem">
+									<a target="_blank" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;text=Hillary%20Clinton%20poses%20with%20Pussy%20Riot%20members&amp;hashtags=cnn" title="Share Hillary Clinton poses with Pussy Riot members on Twitter" class="cnnShareTwitter">Twitter</a>
+								</div>
+
+								<div class="cnnShareThisItem">
+									<a target="_blank" href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F" title="Share Hillary Clinton poses with Pussy Riot members on Digg" class="cnnShareDigg">Digg</a>
+								</div>
+
+								<div class="cnnShareThisItem">
+									<a onclick="window.open('http://del.icio.us/post?v=4&amp;partner=cnn&amp;noui&amp;jump=close&amp;url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F','toolbar=no,width=700,height=400'); return false;" href="http://del.icio.us/post" title="Share Hillary Clinton poses with Pussy Riot members on del.icio.us" class="cnnShareDelicious">del.icio.us</a>
+								</div>
+
+								<div class="cnnShareThisItem">
+									<a target="_blank" href="http://reddit.com/submit?url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F" title="Share Hillary Clinton poses with Pussy Riot members on reddit" class="cnnShareReddit">reddit</a>
+								</div>
+
+								<div class="cnnShareThisItem">
+									<a target="_blank" href="http://www.myspace.com/Modules/PostTo/Pages/?t=Hillary%20Clinton%20poses%20with%20Pussy%20Riot%20members&amp;u=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F" title="Share Hillary Clinton poses with Pussy Riot members on MySpace" class="cnnShareMyspace">MySpace</a>
+								</div>
+
+								<div class="cnnShareThisItem">
+									<a target="_blank" href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F" title="Share Hillary Clinton poses with Pussy Riot members on StumbleUpon" class="cnnShareStumbleUpon">StumbleUpon</a>
+								</div>
+							</div><!-- /cnnShareThisContent -->
+						</div><!-- /cnnShareContent -->
+					</div><!-- /cnnShareBoxContent -->
+					<div class="cnnShareBoxFooter"><div class="cnnShareBoxFooterBL"></div><div class="cnnShareBoxFooterBR"></div></div>
+				</div>
+			</div>
+		</div>
+		
+
+	</div>
+
+	
+	</div>
+
+	<div class="cnnRightPost">
+
+						<span class="cnnGryTmeStmp"><span class="cnn_pt_recent_text">13 minutes ago</span></span>
+				
+		<h1 class="cnnBlogContentTitle"><a title="Permanent Link:Hillary Clinton poses with Pussy Riot members" rel="bookmark" href="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/">Hillary Clinton poses with Pussy Riot members</a></h1><div class="cnn_mugshot cnn_pksz_mug"><img width="30" height="30" alt="politicalmugshot" class="attachment-avatar-byline wp-post-image" src="http://cnnpoliticalticker.files.wordpress.com/2010/10/politicalmugshot.jpg?w=30"></div><div class="cnn_byline">Posted by</div><span class="cnn_author"><a rel="tag" href="http://politicalticker.blogs.cnn.com/tag/cnn-political-unit/">CNN Political Unit</a></span>		<div class="cnnBlogContentPost" data-twttr-id="twttr-sandbox-0">
+			<p class="cnn_first"><strong>(CNN) &ndash;</strong> A photo of Hillary Clinton and members of the Russian pop band Pussy Riot has gone viral, with more than 9,000 retweets on Twitter and over 10,000 "favorites." </p>
+<p>Clinton's Twitter account posted the photo, saying "Great to meet the strong &amp; brave young women from #PussyRiot, who refuse to let their voices be silenced in #Russia."<br>
+<span id="more-299949"></span></p>
+<iframe width="460" scrolling="no" height="771" frameborder="0" id="twitter-widget-0" allowtransparency="true" class="twitter-tweet twitter-tweet-rendered" style="display: block; max-width: 99%; min-width: 220px; padding: 0px; border-radius: 5px; margin: 10px 0px; border-width: 1px; border-style: solid; border-color: rgb(238, 238, 238) rgb(221, 221, 221) rgb(187, 187, 187); -moz-border-top-colors: none; -moz-border-right-colors: none; -moz-border-bottom-colors: none; -moz-border-left-colors: none; border-image: none; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15); position: static; visibility: visible;" title="Embedded Tweet"></iframe>
+<p>The former secretary of state posted the photo Friday after meeting with band members while the annual <a target="_blank" href="http://politicalticker.blogs.cnn.com/2014/04/04/clinton-and-lagarde-high-five-female-political-power/">Women in the World Summit</a> in New York. </p>
+<p>Nadezhda Tolokonnikova and Maria Alyokhina were imprisoned for nearly two years after being convicted of "hooliganism" and inciting religious hatred for performing a punk song slamming Putin in a Moscow cathedral and then posting a video of it online.</p>
+<p>They were also <a target="_blank" href="http://www.cnn.com/2014/02/18/world/europe/russia-pussy-riot-arrests/">briefly detained</a> during the Sochi Winter Olympic Games earlier this year. </p>
+								</div>
+
+					<div id="cnnStryRcmndBtnBtm" class="cnnFBRecBtnBot cnn_tpad15"></div>
+		
+		<div class="cnnPostFooter cnn_tpad15">
+			<table>
+				<tbody><tr>
+					<td>
+						<div class="cnn_mugshot">
+													</div>
+					</td>
+					<td valign="top" class="cnn_padb20 cnn_author_info">
+																											<br><span class="cnnBlogFiledBy cnn_categories">Filed under: <a rel="category tag" title="View all posts in Hillary Clinton" href="http://politicalticker.blogs.cnn.com/category/hillary-clinton/">Hillary Clinton</a>&nbsp;•&nbsp;<a rel="category tag" title="View all posts in Russia" href="http://politicalticker.blogs.cnn.com/category/russia/">Russia</a></span>
+																		</td>
+				</tr>
+			</tbody></table>
+					</div>
+
+
+</div>
+<div class="cnn_clear"></div>
+<div class="cnn-large-embed "></div></div><!-- IE7 background fix -->
+</div>
+
+
+<!-- /blog post 299949 -->
+			<span data-bind="template: { 'name': 'cnnsocial_template_blogSingleBottom' }" templates="" version="0.2.2" type="sharebar" class="cnn_widget cnnsocial_sharebar cnnsocial_sharebar_blogSingleBottom" id="cnnsocial_1"><div class="shareBarPostBottom">
+	<div class="commentCount"><div class="count">4</div><div class="commentText offCenter"><a title="Comments for Hillary Clinton poses with Pussy Riot members" href="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/#comments">Comments »</a></div></div>
+	<nav class="sharebar_mainsites" data-bind="foreach:mainSites">    
+		<div data-bind="attr:{'title':name}" class="shareProp" title="Facebook">
+			<div data-bind="if: buttonCode()">					
+				<div data-bind="'html': getButtonCode, attr:{'class': 'cnn_offical_' + name() + '_sharebutton'}" class="cnn_offical_Facebook_sharebutton"><div href="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/" data-action="recommend" data-show-faces="false" data-width="97" data-layout="box_count" data-send="false" class="fb-like fb_iframe_widget" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=recommend&amp;app_id=80401312489&amp;href=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;layout=box_count&amp;locale=en_US&amp;sdk=joey&amp;send=false&amp;show_faces=false&amp;width=97"><span style="vertical-align: top; width: 0px; height: 0px;"><iframe width="97px" scrolling="no" height="1000px" frameborder="0" name="fed53c4fcce8f6" allowtransparency="true" title="fb:like Facebook Social Plugin" style="border: medium none; visibility: visible;" src="http://www.facebook.com/plugins/like.php?action=recommend&amp;app_id=80401312489&amp;channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2FwTH8U0osOYl.js%3Fversion%3D40%23cb%3Df2d324814f7e992%26domain%3Dpoliticalticker.blogs.cnn.com%26origin%3Dhttp%253A%252F%252Fpoliticalticker.blogs.cnn.com%252Ff32ac923a2045e%26relation%3Dparent.parent&amp;href=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;layout=box_count&amp;locale=en_US&amp;sdk=joey&amp;send=false&amp;show_faces=false&amp;width=97"></iframe></span></div></div>
+			</div>			
+		</div>
+	    
+		<div data-bind="attr:{'title':name}" class="shareProp" title="Twitter">
+			<div data-bind="if: buttonCode()">					
+				<div data-bind="'html': getButtonCode, attr:{'class': 'cnn_offical_' + name() + '_sharebutton'}" class="cnn_offical_Twitter_sharebutton"><iframe scrolling="no" frameborder="0" id="twitter-widget-1" allowtransparency="true" src="http://platform.twitter.com/widgets/tweet_button.1395870373.html#_=1396881415854&amp;count=vertical&amp;id=twitter-widget-1&amp;lang=en&amp;original_referer=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;size=m&amp;text=Hillary%20Clinton%20poses%20with%20Pussy%20Riot%20members%20%E2%80%93%20CNN%20Political%20Ticker%20-%20CNN.com%20Blogs&amp;url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F" class="twitter-share-button twitter-tweet-button twitter-count-vertical" title="Twitter Tweet Button" data-twttr-rendered="true" style="width: 55px; height: 62px;"></iframe></div>
+			</div>			
+		</div>
+	    
+		<div data-bind="attr:{'title':name}" class="shareProp" title="LinkedIn">
+			<div data-bind="if: buttonCode()">					
+				<div data-bind="'html': getButtonCode, attr:{'class': 'cnn_offical_' + name() + '_sharebutton'}" class="cnn_offical_LinkedIn_sharebutton"><span style="line-height: 1; vertical-align: baseline; display: inline-block; text-align: center;" class="IN-widget"><span style="padding: 0px ! important; margin: 0px ! important; text-indent: 0px ! important; display: inline-block ! important; vertical-align: baseline ! important; font-size: 1px ! important;"><span class="IN-top IN-empty" id="li_ui_li_gen_1396881418558_1-container"><span class="IN-top" id="li_ui_li_gen_1396881418558_1"><span class="IN-top" id="li_ui_li_gen_1396881418558_1-inner"><span class="IN-top" id="li_ui_li_gen_1396881418558_1-content">0</span></span></span></span></span><br><span style="padding: 0px ! important; margin: 0px ! important; text-indent: 0px ! important; display: inline-block ! important; vertical-align: baseline ! important; font-size: 1px ! important;"><span id="li_ui_li_gen_1396881418473_0"><a href="javascript:void(0);" id="li_ui_li_gen_1396881418473_0-link"><span id="li_ui_li_gen_1396881418473_0-logo">in</span><span id="li_ui_li_gen_1396881418473_0-title"><span id="li_ui_li_gen_1396881418473_0-mark"></span><span id="li_ui_li_gen_1396881418473_0-title-text">Share</span></span></a></span></span></span><script data-onsuccess="cnn_linkedin_share" data-counter="top" data-url="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/" type="IN/Share+init"></script></div>
+			</div>			
+		</div>
+	    
+		<div data-bind="attr:{'title':name}" class="shareProp" title="GooglePlus">
+			<div data-bind="if: buttonCode()">					
+				<div data-bind="'html': getButtonCode, attr:{'class': 'cnn_offical_' + name() + '_sharebutton'}" class="cnn_offical_GooglePlus_sharebutton"><div style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 50px; height: 60px;" id="___plusone_0"><iframe width="100%" scrolling="no" frameborder="0" hspace="0" marginheight="0" marginwidth="0" style="position: static; top: 0px; width: 50px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 60px;" tabindex="0" vspace="0" id="I0_1396881414928" name="I0_1396881414928" src="https://apis.google.com/_/+1/fastbutton?usegapi=1&amp;size=tall&amp;origin=http%3A%2F%2Fpoliticalticker.blogs.cnn.com&amp;url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;gsrc=3p&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en.6n6nwI51pnI.O%2Fm%3D__features__%2Fam%3DAQ%2Frt%3Dj%2Fd%3D1%2Fz%3Dzcms%2Frs%3DAItRSTPUXsQu93qlcxVJdKODC9kOUUVv6w#_methods=onPlusOne%2C_ready%2C_close%2C_open%2C_resizeMe%2C_renderstart%2Concircled%2Cdrefresh%2Cerefresh&amp;id=I0_1396881414928&amp;parent=http%3A%2F%2Fpoliticalticker.blogs.cnn.com&amp;pfname=&amp;rpctoken=33445043" data-gapiattached="true" title="+1"></iframe></div></div>
+			</div>			
+		</div>
+	</nav>
+	<span class="moreSharing"><b></b><a data-bind="click:openOtherSites" href="#">More sharing</a></span>
+	<nav class="sharebar_sites callout border-callout" data-bind="visible:otherSitesOpen" style="display: none;">	
+		<div data-bind="foreach:otherSites">
+			<div data-bind="attr:{'title':name, 'class':'icon_'+cssClass()}" class="icon_sharebutton_reddit" title="Reddit">
+				<a href="#" data-bind="text:name,click:open" class="siteLinks">Reddit</a>				
+			</div>
+		
+			<div data-bind="attr:{'title':name, 'class':'icon_'+cssClass()}" class="icon_sharebutton_stumbleupon" title="StumbleUpon">
+				<a href="#" data-bind="text:name,click:open" class="siteLinks">StumbleUpon</a>				
+			</div>
+		
+			<div data-bind="attr:{'title':name, 'class':'icon_'+cssClass()}" class="icon_sharebutton_delicious" title="Delicious">
+				<a href="#" data-bind="text:name,click:open" class="siteLinks">Delicious</a>				
+			</div>
+		</div>
+		<b class="notch"></b>				
+	</nav>
+</div>
+</span>		<div id="ob_holder" style="display: none;"><iframe id="ob_iframe" style="display: none; width: 1px; height: 1px;" src="http://widgets.outbrain.com/nanoWidget/3rd/comScore/comScore.htm"></iframe></div><div data-ob-template="cnn" data-widget-id="AR_3" data-src="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/" class="OUTBRAIN" data-ob-mark="true" data-browser="firefox" data-os="macintel" data-dynload="" id="outbrain_widget_0" style="opacity: 1.94481;"><div class="ob_dual_container AR_3">
+<span class="ob_empty"><wbr></wbr></span>
+<style type="text/css">
+.voterDiv .ob_bctrl{display:none;}
+.ob_pdesc IMG{border:none;}
+.AR_3 .ob_what{direction:ltr;text-align:right;clear:both;padding:5px 10px 0px;}
+.AR_3 .ob_what a{color:#999;font-size:10px;font-family:arial;text-decoration: none;}
+.AR_3 .ob_clear{clear:both;}
+.AR_3 .ob_amelia{background:url('http://widgets.outbrain.com/images/widgetIcons/ob_logo_16x16.png') no-repeat center top;display:inline-block;width:16px;height:16px;vertical-align:text-bottom;margin-bottom:-2px;padding:0px 5px;box-sizing:content-box;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;}
+.AR_3:hover .ob_amelia{background-position:center bottom;}
+.AR_3 .ob_dual_container{clear:both;}
+.AR_3 .ob_dual_left,.AR_3 .ob_dual_right {float:left;width:46%;padding:0 2%;}
+.AR_3 .ob_empty{display:none;}</style>
+<style class="ob-custom-css" type="text/css">
+.OUTBRAIN .AR_3 .rec-link {font-weight: bold !important; font-size: 13px; line-height: 14px;}
+.OUTBRAIN .AR_3 .ob_source {font-weight: bold; font-size: 11px; color: #9A9A9A;}
+.OUTBRAIN .AR_3 .ob_dual_right .ob_source {display: none;}
+.OUTBRAIN .AR_3 ul {padding-left: 12px; color: #CA0002; font-size: 9px;}
+.OUTBRAIN .AR_3 .ob_dual_left {padding-left: 0px; width: 48%; border-right: 1px solid #E5E5E5; padding-right: 11px;}
+.OUTBRAIN .AR_3 .ob_dual_right {padding-right: 0px; width: 48%;}
+.OUTBRAIN .AR_3 li {padding-bottom: 8px;}
+.OUTBRAIN .AR_3 .obpd_header, .OUTBRAIN .AR_3 .ob_org_header {font-size: 18px; font-weight: bold; display: block; padding-bottom: 8px;}
+.OUTBRAIN .AR_3 {border-top: 2px solid #E5E5E5; padding-top: 14px; padding-bottom: 14px; margin: 20px 13px 0px 20px;}
+.OUTBRAIN .AR_3 .ob_what {padding: 0px;}
+.shareBarPostBottom {display: none;}
+</style>
+	<div class="ob_dual_left">
+	<span class="obpd_header">From Around the Web</span>		<ul>
+			<li class="odb_li ob-recIdx-0  ob-odd">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="nofollow" onmousedown="this.href='http://paid.outbrain.com/network/redir?key=b29936475cd54f42a11275993bb62c69&amp;rdid=767052422&amp;type=RPM_/E9_ny&amp;in-site=false&amp;idx=0&amp;pc_id=21889363&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;adsCats=1606,1805,-1&amp;refPub=185&amp;prs=true&amp;scp=false&amp;fcapElementId=36503&amp;origSrc=134620&amp;did=730660945';" href="http://monsantoblog.com/2014/02/01/a-day-in-the-life-of-a-pepper-breeder-the-wow-moment/" onclick="" target="_blank">Monsanto Perfects the Pepper</a>
+    		<span class="ob_source">Monsanto</span>         </div>
+	
+</li>			<li class="odb_li ob-recIdx-1  ob-even">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="nofollow" onmousedown="this.href='http://paid.outbrain.com/network/redir?key=e738b07a2febd7c237e3991b8050bbfc&amp;rdid=767052422&amp;type=RPM_/E9_ny&amp;in-site=false&amp;idx=1&amp;pc_id=22011123&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;adsCats=1504,-1,-1&amp;refPub=185&amp;prs=true&amp;scp=false&amp;fcapElementId=37131&amp;origSrc=134620&amp;did=736525794';" href="http://www.easybreathe.com/blog/cleaning-disinfecting-cpap-equipment-important/" onclick="" target="_blank">Your CPAP is Crawling with Mold and Bacteria.&nbsp; Here's How to Clean it.</a>
+    		<span class="ob_source">EasyBreathe</span>         </div>
+	
+</li>			<li class="odb_li ob-recIdx-2  ob-odd">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="nofollow" onmousedown="this.href='http://paid.outbrain.com/network/redir?key=d262baca3ccb277399860ab4d3dded91&amp;rdid=767052422&amp;type=RPM_/E9_ny&amp;in-site=false&amp;idx=2&amp;pc_id=23008627&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;adsCats=1506,-1,-1&amp;refPub=185&amp;prs=true&amp;scp=false&amp;fcapElementId=22730&amp;origSrc=134620&amp;did=757479238';" href="http://www.elizabethstreet.com/living/angelina-jolie-surgery" onclick="" target="_blank">Angelina Jolie Catches Us Off Guard With Another Startling Announcement</a>
+    		<span class="ob_source">Elizabeth Street</span>         </div>
+	
+</li>			<li class="odb_li ob-recIdx-3  ob-even">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="nofollow" onmousedown="this.href='http://paid.outbrain.com/network/redir?key=a896dc186a72303a808afcf1abb6d0cb&amp;rdid=767052422&amp;type=RPM_/E9_ny&amp;in-site=false&amp;idx=3&amp;pc_id=22934826&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;adsCats=1504,-1,-1&amp;refPub=185&amp;prs=true&amp;scp=false&amp;fcapElementId=39936&amp;origSrc=134620&amp;did=755883725';" href="http://www.easybreathe.com/blog/got-cpap-blues-five-common-cpap-issues-five-easy-solutions/" onclick="" target="_blank">Your CPAP is Infested with Bacteria.&nbsp; Clean It by Doing This.</a>
+    		<span class="ob_source">EasyBreathe</span>         </div>
+	
+</li>			<li class="odb_li ob-recIdx-4  ob-odd">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="nofollow" onmousedown="this.href='http://paid.outbrain.com/network/redir?key=8d257c5c7f7044d73228063bf41d185b&amp;rdid=767052422&amp;type=RPM_/E9_ny&amp;in-site=false&amp;idx=4&amp;pc_id=20401895&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;adsCats=1509,1505,1510&amp;refPub=185&amp;prs=true&amp;scp=false&amp;fcapElementId=24952&amp;origSrc=134620&amp;did=616342587';" href="http://losangeles.cbslocal.com/2013/09/17/put-your-best-foot-forward-with-tips-from-lifestyle-expert-justine-santaniello/" onclick="" target="_blank">The first thing people notice about you.</a>
+    		<span class="ob_source">CBS Los Angeles</span>         </div>
+	
+</li>			<li class="odb_li ob-recIdx-5  ob-even">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="nofollow" onmousedown="this.href='http://paid.outbrain.com/network/redir?key=711c77512247b48e3e98d586201ad8e2&amp;rdid=767052422&amp;type=CAD_/E9_ny&amp;in-site=false&amp;idx=5&amp;pc_id=23306787&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;adsCats=1100,1608,1703&amp;refPub=185&amp;prs=true&amp;scp=false&amp;fcapElementId=2188&amp;origSrc=134620&amp;did=761381973';" href="http://blog.allstate.com/raising-backyard-chickens/" onclick="" target="_blank">Things to know before getting started raising backyard chickens</a>
+    		<span class="ob_source">Allstate Blog</span>         </div>
+	
+</li>		</ul>
+	</div>
+	<div class="ob_dual_right">
+	<span class="ob_org_header">More from CNN</span>	<ul>
+			<li class="odb_li ob-recIdx-0  ob-odd">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="" onmousedown="this.href='http://traffic.outbrain.com/network/redir?key=e1e810c2241f7666d4bde5442bcf02d0&amp;rdid=767052422&amp;type=HYD_d/E9_ny&amp;in-site=false&amp;idx=0&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;imgType=2&amp;adsCats=1702,-1,-1&amp;refPub=185&amp;prs=true&amp;scp=false&amp;origSrc=134620&amp;did=766903611';" href="http://www.cnn.com/2014/04/07/showbiz/mickey-rooney-obit/" onclick="" target="_self">Legendary actor Mickey Rooney dies at 93</a>
+    		<span class="ob_source"><span class="ob_source_cnn">CNN</span> <span class="ob_source_cnn_section">Entertainment</span></span>         </div>
+	
+</li>			<li class="odb_li ob-recIdx-1  ob-even">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="" onmousedown="this.href='http://traffic.outbrain.com/network/redir?key=07f1b620fdfbf7b5bf03c03983f639de&amp;rdid=767052422&amp;type=SYLD_d/E9_ny&amp;in-site=false&amp;idx=1&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;imgType=0&amp;adsCats=1403,-1,-1&amp;refPub=185&amp;prs=true&amp;scp=false&amp;origSrc=134620&amp;did=760944350';" href="http://www.cnn.com/2014/03/23/showbiz/james-rebhorn-dead/" onclick="" target="_self">Actor James Rebhorn dead at 65; a familiar face in character roles</a>
+    		<span class="ob_source"><span class="ob_source_cnn">CNN</span> <span class="ob_source_cnn_section">Entertainment</span></span>         </div>
+	
+</li>			<li class="odb_li ob-recIdx-2  ob-odd">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="" onmousedown="this.href='http://traffic.outbrain.com/network/redir?key=fc8e79a14d83dc4861aef2b46cd9f932&amp;rdid=767052422&amp;type=SYLD_d/E9_ny&amp;in-site=false&amp;idx=2&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;imgType=0&amp;adsCats=1403,-1,-1&amp;refPub=185&amp;prs=true&amp;scp=false&amp;origSrc=134620&amp;did=765738776';" href="http://marquee.blogs.cnn.com/2014/04/03/kate-winslet-still-haunted-by-titanic-nude-scene/" onclick="" target="_self">Kate Winslet 'still haunted' by 'Titanic' nude scene</a>
+    		<span class="ob_source"><span class="ob_source_cnn">CNN</span> <span class="ob_source_cnn_section">The Marquee Blog</span></span>         </div>
+	
+</li>			<li class="odb_li ob-recIdx-3  ob-even">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="" onmousedown="this.href='http://traffic.outbrain.com/network/redir?key=b9d6184c9a6afb7f31b154c93aa1a806&amp;rdid=767052422&amp;type=MC_t/E9_ny&amp;in-site=true&amp;idx=3&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;imgType=0&amp;adsCats=1708,-1,-1&amp;refPub=185&amp;prs=true&amp;scp=false&amp;origSrc=134620&amp;did=765693642';" href="http://politicalticker.blogs.cnn.com/2014/04/03/boehner-does-what-he-hasnt-done-in-four-years/" onclick="" target="_self">Boehner does what he hasn't done in four years</a>
+    		<span class="ob_source"><span class="ob_source_cnn">CNN</span> <span class="ob_source_cnn_section">Political Ticker</span></span>         </div>
+	
+</li>			<li class="odb_li ob-recIdx-4  ob-odd">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="" onmousedown="this.href='http://traffic.outbrain.com/network/redir?key=6206ae5a93d789d7c6b54a513f433a38&amp;rdid=767052422&amp;type=SYLD_d/E9_ny&amp;in-site=true&amp;idx=4&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;imgType=0&amp;adsCats=1708,-1,-1&amp;refPub=185&amp;prs=true&amp;scp=false&amp;origSrc=134620&amp;did=764886722';" href="http://politicalticker.blogs.cnn.com/2014/04/01/rep-terry-was-late-to-hearing-and-his-excuse-necessitated-an-apology/" onclick="" target="_self">Rep. Terry was late to hearing, and his excuse necessitated an apology</a>
+    		<span class="ob_source"><span class="ob_source_cnn">CNN</span> <span class="ob_source_cnn_section">Political Ticker</span></span>         </div>
+	
+</li>			<li class="odb_li ob-recIdx-5  ob-even">
+    	
+<div class="ob-text-content">
+          <a class="rec-link" rel="" onmousedown="this.href='http://traffic.outbrain.com/network/redir?key=da7ac594d6fd3c9d78210e6771cb12c3&amp;rdid=767052422&amp;type=SYLD_d/E9_ny&amp;in-site=false&amp;idx=5&amp;req_id=7016c13264b5c281dc599e7c38d5a3fd&amp;agent=blog_JS_rec&amp;recMode=7&amp;reqType=1&amp;wid=110&amp;imgType=0&amp;adsCats=1403,-1,-1&amp;refPub=185&amp;prs=true&amp;scp=false&amp;origSrc=134620&amp;did=755324903';" href="http://us.cnn.com/2014/03/08/tech/web/kevin-bacon-six-degrees-sxsw/" onclick="" target="_self">Kevin Bacon on 'Six Degrees' game: 'I was horrified'</a>
+    		<span class="ob_source"><span class="ob_source_cnn">CNN</span> <span class="ob_source_cnn_section">us.cnn.com</span></span>         </div>
+	
+</li>		</ul>
+	</div>
+		<div class="ob_what">
+	
+	<a onclick="OBR.extern.callWhatIs('http://www.outbrain.com/what-is/default/en','',-1,-1,true ,null);return false" onmousedown="" href="#">
+		Recommended by<span title="Outbrain" class="ob_amelia"></span>
+	</a>
+</div>
+	<div class="ob_clear"></div>
+</div></div>
+				
+<!-- You can start editing here. -->
+<div class="cnn_divline cnn_divln3pxblck" style="margin-top: 11px;"></div>
+
+<div class="cnn_comments" id="comments">
+	<a name="comments"></a>
+    <h6>sound<b>off</b> <span>(4 Responses)</span></h6>
+			 
+		<ol class="commentlist">
+			   <li id="li-comment-5161683" class="comment even thread-even depth-1">
+     <div id="comment-5161683" class="commentItem">
+		<div class="cnn_special_comment">
+
+			<strong><cite class="fn">Chris-E...al</cite></strong><br>
+			
+			<p>So much ? They would needed a big top circus tent if Anthony Weiner would'nt have been a no show .</p>
+
+			<div class="commentFooter">
+				April 7, 2014 09:54 am at 9:54 am | 			</div>
+
+		</div><!-- /cnn_special_comment -->
+
+      <div class="commentDivline"></div>
+     </div><!-- /commentItem -->
+</li><!-- #comment-## -->
+   <li id="li-comment-5161735" class="comment odd alt thread-odd thread-alt depth-1">
+     <div id="comment-5161735" class="commentItem">
+		<div class="cnn_special_comment">
+
+			<strong><cite class="fn">Malory Archer</cite></strong><br>
+			
+			<p>Chris-E...al</p>
+<p>So much ? They would needed a big top circus tent if Anthony Weiner would'nt have been a no show .</p>
+<p>+++++++++++++++++++++++++++++++++++++++</p>
+<p>Who?</p>
+
+			<div class="commentFooter">
+				April 7, 2014 10:23 am at 10:23 am | 			</div>
+
+		</div><!-- /cnn_special_comment -->
+
+      <div class="commentDivline"></div>
+     </div><!-- /commentItem -->
+</li><!-- #comment-## -->
+   <li id="li-comment-5161745" class="comment even thread-even depth-1">
+     <div id="comment-5161745" class="commentItem">
+		<div class="cnn_special_comment">
+
+			<strong><cite class="fn">Winston Smith</cite></strong><br>
+			
+			<p>And the republican heads start exploding in 5,4,3,2,1.</p>
+
+			<div class="commentFooter">
+				April 7, 2014 10:27 am at 10:27 am | 			</div>
+
+		</div><!-- /cnn_special_comment -->
+
+      <div class="commentDivline"></div>
+     </div><!-- /commentItem -->
+</li><!-- #comment-## -->
+   <li id="li-comment-5161749" class="comment odd alt thread-odd thread-alt depth-1">
+     <div id="comment-5161749" class="commentItem">
+		<div class="cnn_special_comment">
+
+			<strong><cite class="fn">smith</cite></strong><br>
+			
+			<p>What a great message this sends..smh..I wonder if Clinton understands that these morons are doing this for fame and attention.</p>
+
+			<div class="commentFooter">
+				April 7, 2014 10:31 am at 10:31 am | 			</div>
+
+		</div><!-- /cnn_special_comment -->
+
+      <div class="commentDivline"></div>
+     </div><!-- /commentItem -->
+</li><!-- #comment-## -->
+		</ol>
+			
+			<div id="respond">
+			<h3 style="font-size:16px;">Post a comment</h3>
+			<div class="cancel-comment-reply">
+				<small><a style="display:none;" href="/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/?hpt=hp_t2#respond" id="cancel-comment-reply-link" rel="nofollow">Click here to cancel reply.</a></small>
+			</div>
+
+							<form id="commentform" method="post" action="http://politicalticker.blogs.cnn.com/wp-comments-post.php">
+																		<table width="620" cellspacing="0" cellpadding="0" border="1" style="margin:0px;padding-bottom:8px;">			
+								<tbody><tr>
+									<td width="300" style="font-size:11px;">
+										<label for="author"><b>Name:</b> <small></small></label><br>
+										<input type="text" style="width:300px;" tabindex="1" value="" id="author" name="author">
+									</td>
+									<td width="20">&nbsp;</td>
+									<td width="300" style="font-size:11px;">
+																			<label for="author"><b>E-mail:</b> <small></small></label><br>
+										<input type="text" style="width:300px;" tabindex="2" value="" id="email" name="email">
+																		</td>
+								</tr>
+							</tbody></table>
+											
+															<table width="620" cellspacing="0" cellpadding="0" border="1" style="margin:0px;">
+						<tbody><tr>
+							<td colspan="2"><textarea style="width:600px;height:65px;padding-left:0;" class="cnnCommentBlogTextarea" tabindex="4" id="comment" name="comment"></textarea></td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<p style="padding-bottom:20px;"><small>CNN welcomes a lively and courteous discussion as long as you follow the Rules of Conduct set forth in our <a href="http://www.cnn.com/interactive_legal.html">Terms of Service</a>. Comments are not pre-screened before they post. You agree that anything you post may be used, along with your name and profile picture, in accordance with our <a href="http://www.cnn.com/privacy.html">Privacy Policy</a> and the license you have granted pursuant to our <a href="http://www.cnn.com/interactive_legal.html">Terms of Service</a>.</small></p>
+							</td>
+							<td valign="top">
+								<div style="padding:5px 0 0px 0px;" class="cnnCommentBlogButton"><input width="47" type="image" height="22" border="0" alt="Post" src="http://i.cdn.turner.com/cnn/.element/img/3.0/1px.gif" name="submit" id="submit" tabindex="5">
+									<input type="hidden" id="comment_post_ID" value="299949" name="comment_post_ID">
+<input type="hidden" value="0" id="comment_parent" name="comment_parent">
+								</div>
+								
+<input type="hidden" value="1396881265" name="genseq">
+<p style="display: none;"><input type="hidden" value="52a28fe0ee" name="akismet_comment_nonce" id="akismet_comment_nonce"></p><script src="http://s2.wp.com/wp-content/mu-plugins/akismet-2.5/form.js?m=1308783962g" type="text/javascript"></script>
+<p style="display: none;"><input type="hidden" value="1396881410292" name="ak_js" id="ak_js"></p>							</td>
+						</tr>
+					</tbody></table>
+				</form>
+					</div>
+	</div> 
+					<div class="cnn_post_navigation">
+				<div class="cnnHome cnn_home_column_3"><a href="http://politicalticker.blogs.cnn.com">« Back to main</a></div>
+				<div class="cnnPrev cnn_prev_column_3"><a rel="prev" href="http://politicalticker.blogs.cnn.com/2014/04/07/white-house-counsel-set-to-leave-in-may/">« previous post</a></div>
+				<div class="cnnNext cnn_next_column_3"><a rel="next" href="http://politicalticker.blogs.cnn.com/2014/04/07/poll-rate-of-uninsured-americans-drops/">next post »</a></div>
+				<div class="cnn_clear"></div>
+			</div>
+										</div><!-- /cnnBlogContentArea -->
+						</div>
+						<div class="cnn_right_column">
+							<span data-bind="template: { 'name': 'cnnsocial_template_blogSingle' }" templates="" version="0.2.2" type="sharebar" class="cnn_widget cnnsocial_sharebar cnnsocial_sharebar_blogSingle" id="cnnsocial_2"><div class="shareBarPostRight">
+	<nav class="sharebar_mainsites" data-bind="foreach:mainSites">    
+		<div data-bind="attr:{'title':name, 'class':'shareProp cnn_item_'+$index()}" class="shareProp cnn_item_0" title="Facebook">
+			<div data-bind="if: buttonCode()">
+				<div data-bind="'html': getButtonCode, attr:{'class': 'cnn_offical_' + name() + '_sharebutton'}" class="cnn_offical_Facebook_sharebutton"><div href="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/" data-action="recommend" data-show-faces="false" data-width="97" data-layout="box_count" data-send="false" class="fb-like fb_iframe_widget" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=recommend&amp;app_id=80401312489&amp;href=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;layout=box_count&amp;locale=en_US&amp;sdk=joey&amp;send=false&amp;show_faces=false&amp;width=97"><span style="vertical-align: bottom; width: 92px; height: 61px;"><iframe width="97px" scrolling="no" height="1000px" frameborder="0" name="f1f5e493aec95cc" allowtransparency="true" title="fb:like Facebook Social Plugin" style="border: medium none; visibility: visible; width: 92px; height: 61px;" src="http://www.facebook.com/plugins/like.php?action=recommend&amp;app_id=80401312489&amp;channel=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2FwTH8U0osOYl.js%3Fversion%3D40%23cb%3Df351e06b7469d8e%26domain%3Dpoliticalticker.blogs.cnn.com%26origin%3Dhttp%253A%252F%252Fpoliticalticker.blogs.cnn.com%252Ff32ac923a2045e%26relation%3Dparent.parent&amp;href=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;layout=box_count&amp;locale=en_US&amp;sdk=joey&amp;send=false&amp;show_faces=false&amp;width=97" class=""></iframe></span></div></div>
+			</div>					
+		</div>
+	    
+		<div data-bind="attr:{'title':name, 'class':'shareProp cnn_item_'+$index()}" class="shareProp cnn_item_1" title="Twitter">
+			<div data-bind="if: buttonCode()">
+				<div data-bind="'html': getButtonCode, attr:{'class': 'cnn_offical_' + name() + '_sharebutton'}" class="cnn_offical_Twitter_sharebutton"><iframe scrolling="no" frameborder="0" id="twitter-widget-2" allowtransparency="true" src="http://platform.twitter.com/widgets/tweet_button.1395870373.html#_=1396881415876&amp;count=vertical&amp;id=twitter-widget-2&amp;lang=en&amp;original_referer=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;size=m&amp;text=Hillary%20Clinton%20poses%20with%20Pussy%20Riot%20members%20%E2%80%93%20CNN%20Political%20Ticker%20-%20CNN.com%20Blogs&amp;url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F" class="twitter-share-button twitter-tweet-button twitter-count-vertical" title="Twitter Tweet Button" data-twttr-rendered="true" style="width: 55px; height: 62px;"></iframe></div>
+			</div>					
+		</div>
+	    
+		<div data-bind="attr:{'title':name, 'class':'shareProp cnn_item_'+$index()}" class="shareProp cnn_item_2" title="LinkedIn">
+			<div data-bind="if: buttonCode()">
+				<div data-bind="'html': getButtonCode, attr:{'class': 'cnn_offical_' + name() + '_sharebutton'}" class="cnn_offical_LinkedIn_sharebutton"><span style="line-height: 1; vertical-align: baseline; display: inline-block; text-align: center;" class="IN-widget"><span style="padding: 0px ! important; margin: 0px ! important; text-indent: 0px ! important; display: inline-block ! important; vertical-align: baseline ! important; font-size: 1px ! important;"><span class="IN-top IN-empty" id="li_ui_li_gen_1396881418592_3-container"><span class="IN-top" id="li_ui_li_gen_1396881418592_3"><span class="IN-top" id="li_ui_li_gen_1396881418592_3-inner"><span class="IN-top" id="li_ui_li_gen_1396881418592_3-content">0</span></span></span></span></span><br><span style="padding: 0px ! important; margin: 0px ! important; text-indent: 0px ! important; display: inline-block ! important; vertical-align: baseline ! important; font-size: 1px ! important;"><span id="li_ui_li_gen_1396881418583_2"><a href="javascript:void(0);" id="li_ui_li_gen_1396881418583_2-link"><span id="li_ui_li_gen_1396881418583_2-logo">in</span><span id="li_ui_li_gen_1396881418583_2-title"><span id="li_ui_li_gen_1396881418583_2-mark"></span><span id="li_ui_li_gen_1396881418583_2-title-text">Share</span></span></a></span></span></span><script data-onsuccess="cnn_linkedin_share" data-counter="top" data-url="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/" type="IN/Share+init"></script></div>
+			</div>					
+		</div>
+	    
+		<div data-bind="attr:{'title':name, 'class':'shareProp cnn_item_'+$index()}" class="shareProp cnn_item_3" title="GooglePlus">
+			<div data-bind="if: buttonCode()">
+				<div data-bind="'html': getButtonCode, attr:{'class': 'cnn_offical_' + name() + '_sharebutton'}" class="cnn_offical_GooglePlus_sharebutton"><div style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 50px; height: 60px;" id="___plusone_1"><iframe width="100%" scrolling="no" frameborder="0" hspace="0" marginheight="0" marginwidth="0" style="position: static; top: 0px; width: 50px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 60px;" tabindex="0" vspace="0" id="I1_1396881414974" name="I1_1396881414974" src="https://apis.google.com/_/+1/fastbutton?usegapi=1&amp;size=tall&amp;origin=http%3A%2F%2Fpoliticalticker.blogs.cnn.com&amp;url=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F&amp;gsrc=3p&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en.6n6nwI51pnI.O%2Fm%3D__features__%2Fam%3DAQ%2Frt%3Dj%2Fd%3D1%2Fz%3Dzcms%2Frs%3DAItRSTPUXsQu93qlcxVJdKODC9kOUUVv6w#_methods=onPlusOne%2C_ready%2C_close%2C_open%2C_resizeMe%2C_renderstart%2Concircled%2Cdrefresh%2Cerefresh&amp;id=I1_1396881414974&amp;parent=http%3A%2F%2Fpoliticalticker.blogs.cnn.com&amp;pfname=&amp;rpctoken=10352089" data-gapiattached="true" title="+1"></iframe></div></div>
+			</div>					
+		</div>
+	</nav>
+	<span class="moreSharing"><b></b><a data-bind="click:openOtherSites" href="#">More sharing</a></span>
+	<nav class="sharebar_sites callout border-callout" data-bind="visible:otherSitesOpen" style="display: none;">	
+		<div data-bind="foreach:otherSites">
+			<div data-bind="attr:{'title':name, 'class':'icon_'+cssClass()}" class="icon_sharebutton_reddit" title="Reddit">
+				<a href="#" data-bind="text:name,click:open" class="siteLinks">Reddit</a>				
+			</div>
+		
+			<div data-bind="attr:{'title':name, 'class':'icon_'+cssClass()}" class="icon_sharebutton_stumbleupon" title="StumbleUpon">
+				<a href="#" data-bind="text:name,click:open" class="siteLinks">StumbleUpon</a>				
+			</div>
+		
+			<div data-bind="attr:{'title':name, 'class':'icon_'+cssClass()}" class="icon_sharebutton_delicious" title="Delicious">
+				<a href="#" data-bind="text:name,click:open" class="siteLinks">Delicious</a>				
+			</div>
+		</div>
+		<b class="notch"></b>				
+	</nav>
+<div>
+</div></div></span>							<div class="cnn_right_col" id="cnnRightCol">
+
+<div class="cnnRRBox"><div class="cnnRRBoxHeader"><img width="4" height="4" alt="" src="http://i.cdn.turner.com/cnn/.element/img/2.0/mosaic/base_skins/right_rail/grey_corner_TL.gif"></div><div class="cnnRRBoxContent"><div class="cnn_pksz_tp_hck"></div>
+
+
+
+<div class="cnn_sidebar" id="sidebar">
+
+	
+	
+	<div class="widget-1 cnn_widget_first cnn_widget cnn_widget_text" id="cnn_text-5"><h3 class="cnn_widget_title">Follow this Blog:</h3>			<div class="textwidget"><div class="cnn_social_icons"><a href="https://twitter.com/#!/politicalticker" target="_blank" class="cnn_social_icon_twitter cnn_social_icon"><span class="cnn_social_icon_text">Twitter</span></a><div class="cnn_clear"></div></div><div class="cnn_empty_text_widget"><div class="cnn_clear">.</div></div></div>
+		</div><div class="widget-2 cnn_widget cnn_cnn_widget_adtag" id="cnn_cnn_adtag-3"><h3 class="cnn_widget_title"></h3><div class="cnn_adtag_rgt"><!-- CALLOUT|http://ads.cnn.com/html.ng/site=cnn&cnn_pagetype=blog&cnn_position=336x280_rgt&cnn_rollup=politics&cnn_section=political_ticker&page.allowcompete=no&params.styles=fs|CALLOUT -->
+<!-- ADSPACE: politics/political_ticker/blog/rgt.336x280 -->
+<div align="center" style="padding: 0px; margin: 0px; border: 0px none; display: block;" id="ad-b910b650f3975d03"><iframe width="300" scrolling="no" height="250" frameborder="0" id="b910b650f3975d03" name="Advertisement" style="position: relative; top: 0px; left: 0px;" marginwidth="0" marginheight="0" src="http://ads.cnn.com/html.ng/site=cnn&amp;cnn_pagetype=blog&amp;cnn_position=336x280_rgt&amp;cnn_rollup=politics&amp;cnn_section=political_ticker&amp;page.allowcompete=no&amp;params.styles=fs&amp;Params.User.UserID=5341ed620ac4450a3c745d367501fa9d&amp;transactionID=13968814095089708417740044&amp;tile=7258041886931&amp;domId=b910b650f3975d03&amp;kxid=n9k7ach4r&amp;kxseg=" class=" adunit_300x250"></iframe></div>
+<script type="text/javascript">
+cnnad_createAd("b910b650f3975d03","http://ads.cnn.com/html.ng/site=cnn&amp;cnn_pagetype=blog&amp;cnn_position=336x280_rgt&amp;cnn_rollup=politics&amp;cnn_section=political_ticker&amp;page.allowcompete=no&amp;params.styles=fs","280","336");
+cnnad_registerSpace("b910b650f3975d03","336","280");
+</script>
+<!-- ADSPACE-END --><div class="cnn_adtitle"><img alt="Advertisement" src="http://i.cdn.turner.com/cnn/.element/img/3.0/global/misc/advertisement.gif"></div></div></div><div class="widget-3 cnn_widget cnn_widget_rss" id="cnn_rss-4"><h3 class="cnn_widget_title"><a title="Syndicate this content" href="http://rss.cnn.com/rss/cnn_allpolitics.rss" class="rsswidget"><img width="14" height="14" alt="RSS" src="http://s.wordpress.com/wp-includes/images/rss.png?m=1354137473g" style="background: orange; color: white; border: none;"></a> <a title="CNN.com delivers up-to-the-minute news and information on the latest top stories, weather, entertainment, politics and more." href="http://www.cnn.com/POLITICS/index.html?eref=rss_politics" class="rsswidget">From CNN Politics</a></h3><ul><li><a title="A soldier being examined for possible post-traumatic stress disorder buys a gun off base and fails to register it with a commander, as required. Now Spc. Ivan Lopez is dead, along with three others, in the second major shooting at Fort Hood in less than five years.      " href="http://rss.cnn.com/~r/rss/cnn_allpolitics/~3/ko88RITWllA/index.html" class="rsswidget">Latest Fort Hood shooting revives broader gun debate</a> <span class="rss-date">April 4, 2014 12:13 am</span></li><li><a title="In late 2012, when Neel Kashkari first pondered the idea of running for governor of California, one of the first people he sought out for advice was another Republican who once faced long odds in a big state gubernatorial bid: George W. Bush.      " href="http://rss.cnn.com/~r/rss/cnn_allpolitics/~3/oXA7TTBMlXY/index.html" class="rsswidget">Why is Neel Kashkari running for California governor?</a> <span class="rss-date">April 5, 2014 12:42 am</span></li><li><a title="The House Oversight Committee plans to vote next week on whether to hold a former Internal Revenue Service official in contempt of Congress for refusing to testify about the agency's alleged targeting of conservative groups seeking tax-exempt status, according to Lauren Greene, communications director for committee member Rep. Blake Farenthold, R-Texas. […]" href="http://rss.cnn.com/~r/rss/cnn_allpolitics/~3/eTkvw-HnwO0/index.html" class="rsswidget">House panel to vote on holding ex-IRS official in contempt</a> <span class="rss-date">April 4, 2014 05:34 pm</span></li><li><a title="The Senate Intelligence Committee is set to vote Thursday to declassify portions of a report on the CIA's post-9/11 controversial detention and interrogation program, which U.S. officials familiar with its findings say will draw a harsh portrait of the agency and the legality of its tactics.      " href="http://rss.cnn.com/~r/rss/cnn_allpolitics/~3/RTzk0PJEF8Q/index.html" class="rsswidget">Senate panel votes to declassify aspects of CIA report</a> <span class="rss-date">April 3, 2014 07:59 pm</span></li><li><a title="Again stepping into the role of compromise-seeker, Sen. Susan Collins of Maine is launching what may be a long-shot effort to forge bipartisan compromise over a minimum wage increase.      " href="http://rss.cnn.com/~r/rss/cnn_allpolitics/~3/28G2eVlZ2Bg/index.html" class="rsswidget">A Republican tries to save the minimum wage increase</a> <span class="rss-date">April 5, 2014 02:50 pm</span></li><li><a title="It's almost crunch time. The 2014 midterm elections are less than seven months away.      " href="http://rss.cnn.com/~r/rss/cnn_allpolitics/~3/5Zee_Aaz7jI/index.html" class="rsswidget">Seven key dates in the seven months leading up to the midterms</a> <span class="rss-date">April 7, 2014 01:04 pm</span></li></ul></div><div class="widget-4 cnn_widget cnn_widget_links" id="linkcat-120414"><h3 class="cnn_widget_title">Related Links</h3>
+	<ul class="xoxo blogroll">
+<li><a href="http://cnn.com/politics">CNNPolitics.com</a></li>
+<li><a href="http://www.cnn.com/ELECTION/2012/">Election Center</a></li>
+<li><a href="http://swampland.blogs.time.com/">TIME.com: Swampland</a></li>
+
+	</ul>
+</div>
+		<div class="widget-5 cnn_widget cnn_widget_recent_entries" id="cnn_recent-posts-3">		<h3 class="cnn_widget_title">Recent Posts</h3>		<ul>
+					<li>
+				<a href="http://politicalticker.blogs.cnn.com/2014/04/07/poll-rate-of-uninsured-americans-drops/">Poll: Rate of uninsured Americans drops</a>
+						</li>
+					<li>
+				<a href="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/">Hillary Clinton poses with Pussy Riot members</a>
+						</li>
+					<li>
+				<a href="http://politicalticker.blogs.cnn.com/2014/04/07/white-house-counsel-set-to-leave-in-may/">White House counsel set to leave in May</a>
+						</li>
+					<li>
+				<a href="http://politicalticker.blogs.cnn.com/2014/04/07/inside-politics-jeb-bush-says-immigration-is-an-act-of-love-will-his-party-agree/">Inside Politics: Jeb Bush says immigration is an "act of love"; Will his party agree?</a>
+						</li>
+					<li>
+				<a href="http://politicalticker.blogs.cnn.com/2014/04/07/brown-to-formally-jump-into-senate-race/">Brown to formally jump into Senate race</a>
+						</li>
+				</ul>
+		</div><div class="widget-6 cnn_widget cnn_cnn_widget_adtag" id="cnn_cnn_adtag-4"><h3 class="cnn_widget_title"></h3><div class="cnn_adtag_rgt2"><!-- CALLOUT|http://ads.cnn.com/html.ng/site=cnn&cnn_pagetype=blog&cnn_position=336x850_rgt2&cnn_rollup=politics&cnn_section=political_ticker&page.allowcompete=no&params.styles=fs|CALLOUT -->
+<!-- ADSPACE: politics/political_ticker/blog/rgt2.336x850 -->
+<div align="center" style="padding: 0px; margin: 0px; border: 0px none; display: block;" id="ad-599ea3ca37778955"><iframe width="300" scrolling="no" height="250" frameborder="0" id="599ea3ca37778955" name="Advertisement" style="position: relative; top: 0px; left: 0px;" marginwidth="0" marginheight="0" src="http://ads.cnn.com/html.ng/site=cnn&amp;cnn_pagetype=blog&amp;cnn_position=336x850_rgt2&amp;cnn_rollup=politics&amp;cnn_section=political_ticker&amp;page.allowcompete=no&amp;params.styles=fs&amp;Params.User.UserID=5341ed620ac4450a3c745d367501fa9d&amp;transactionID=13968814095089708417740044&amp;tile=7258041886931&amp;domId=599ea3ca37778955&amp;kxid=n9k7ach4r&amp;kxseg=" class=" adunit_300x250"></iframe></div>
+<script type="text/javascript">
+cnnad_createAd("599ea3ca37778955","http://ads.cnn.com/html.ng/site=cnn&amp;cnn_pagetype=blog&amp;cnn_position=336x850_rgt2&amp;cnn_rollup=politics&amp;cnn_section=political_ticker&amp;page.allowcompete=no&amp;params.styles=fs","850","336");
+cnnad_registerSpace("599ea3ca37778955","336","850");
+</script>
+<!-- ADSPACE-END --><div class="cnn_adtitle"><img alt="Advertisement" src="http://i.cdn.turner.com/cnn/.element/img/3.0/global/misc/advertisement.gif"></div></div></div><div class="widget-7 cnn_widget cnn_widget_recent_comments" id="cnn_recent-comments-2"><h3 class="cnn_widget_title">Recent Comments</h3>				<ul id="recentcomments">
+											<li class="recentcomments">
+							Peter Gerdeman on <a href="http://politicalticker.blogs.cnn.com/2014/04/06/jeb-bush-immigration-is-not-a-felony-but-an-act-of-love/comment-page-23/#comment-5161751">Jeb Bush: Immigration is 'not a felony' but 'an act of love'</a>						</li>
+
+												<li class="recentcomments">
+							The Republican Party Is Dead To Me on <a href="http://politicalticker.blogs.cnn.com/2014/04/07/inside-politics-jeb-bush-says-immigration-is-an-act-of-love-will-his-party-agree/comment-page-1/#comment-5161750">Inside Politics: Jeb Bush says immigration is an "act of love"; Will his party agree?</a>						</li>
+
+												<li class="recentcomments">
+							smith on <a href="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/comment-page-1/#comment-5161749">Hillary Clinton poses with Pussy Riot members</a>						</li>
+
+												<li class="recentcomments">
+							joe on <a href="http://politicalticker.blogs.cnn.com/2014/04/06/jeb-bush-immigration-is-not-a-felony-but-an-act-of-love/comment-page-23/#comment-5161748">Jeb Bush: Immigration is 'not a felony' but 'an act of love'</a>						</li>
+
+												<li class="recentcomments">
+							Paulwisc on <a href="http://politicalticker.blogs.cnn.com/2014/04/06/jeb-bush-immigration-is-not-a-felony-but-an-act-of-love/comment-page-23/#comment-5161746">Jeb Bush: Immigration is 'not a felony' but 'an act of love'</a>						</li>
+
+										</ul>
+				</div><div class="widget-8 cnn_widget cnn_widget_calendar" id="cnn_calendar-4"><h3 class="cnn_widget_title">Archives</h3><div id="calendar_wrap"><table id="wp-calendar">
+	<caption>April 2014</caption>
+	<thead>
+	<tr>
+		<th title="Sunday" scope="col">S</th>
+		<th title="Monday" scope="col">M</th>
+		<th title="Tuesday" scope="col">T</th>
+		<th title="Wednesday" scope="col">W</th>
+		<th title="Thursday" scope="col">T</th>
+		<th title="Friday" scope="col">F</th>
+		<th title="Saturday" scope="col">S</th>
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>
+		<td id="prev" colspan="3"><a title="View posts for March 2014" href="http://politicalticker.blogs.cnn.com/2014/03/">« Mar</a></td>
+		<td class="pad">&nbsp;</td>
+		<td class="pad" id="next" colspan="3">&nbsp;</td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>
+		<td class="pad" colspan="2">&nbsp;</td><td><a title="Official: Obamacare on track to meet original goal
+Bill Clinton parodies wife's epic photo
+Republicans hit a nerve when it comes to Obamacare
+Inside Politics: A policy win and a political price for Obamacare
+By the numbers: The final Obamacare push
+Ted Cruz's fake tattoo and other April Fools’ pranks
+Red Sox Nation converges on the White House
+Rand Paul: GOP needs to 'get beyond deportation'
+Incumbent Mayor Vince Gray concedes defeat in Democratic primary
+Ryan budget aims to cut $5.1 trillion, reach balance in 10 years
+LeBron, ‘Ferns’ key to enrollment surge, White House says
+CNN's GUT CHECK for April 1, 2014
+Scarborough talks 2016 race in South Carolina
+Rep. Terry was late to hearing, and his excuse necessitated an apology" href="http://politicalticker.blogs.cnn.com/2014/04/01/">1</a></td><td><a title="Sebelius thanks staff, warns work is far from over
+Obama takes minimum wage pitch to Michigan
+Inside Politics: GOP responds to Obamacare enrollment with new repeal plan
+Justices strike down political donor limits
+Parties tout campaign cash figures
+Jindal on Obamacare sign-ups: So what
+Democrats to focus on Ryan budget in 2014
+Phoenix, Columbus out of the running for 2016 GOP convention
+Christie stabilizing in new poll, but few believe he's clear from scandal
+Ted Cruz: Religious liberty 'never been more in peril'
+Poll: Americans say Putin not like Hitler
+CNN's GUT CHECK for April 2, 2014
+Rubio: Presidential candidates should only run for one office at a time
+Supreme Court allows more private money in election campaigns" href="http://politicalticker.blogs.cnn.com/2014/04/02/">2</a></td><td><a title="Chris Christie: The $33 million man
+Hoboken leaders clear way for new witness in Christie scandal investigation
+Bill Clinton 'wouldn’t be surprised' by an alien visit
+Poll: Warren and Clinton hot; Christie cools off
+Inside Politics: Could more money (and transparency) be a good thing?
+Fallon, dressed as Putin, calls Palin
+Why is this man running for governor of California?
+Democrat Nunn highlights Bush 41 in first ad
+House panel to consider holding ex-IRS official in contempt
+Boehner does what he hasn't done in four years
+Clinton reflects on goals in New York speech
+CNN's GUT CHECK for April 3, 2014
+Christie: 'I'll consider' edible medical marijuana for adults
+Committee investigating Bridgegate plans to meet next week, issue more subpoenas
+First on CNN: Hillary Clinton to return to Arkansas days in speech to education group
+George W. Bush to unveil paintings" href="http://politicalticker.blogs.cnn.com/2014/04/03/">3</a></td><td><a title="Oops moment for senator: He shows up at wrong hearing
+Inside Politics: Is Democrats' long winter over?
+Clinton and Lagarde high five female political power
+Two potential GOP White House hopefuls join forces
+Seven key dates in the seven months leading up to the midterms
+Ohio ban on recognizing out-of-state gay marriages to fall
+Former top aide to run Brown's Senate bid
+House conservatives block modest GOP immigration proposal
+Political Circus: Big Papi, big selfies, big deals
+Nancy Pelosi on Hillary Clinton, women in politics: 'I never expected anything but a double standard'
+CNN's GUT CHECK for April 4, 2014
+Ron Paul proud of son Rand Paul’s vote against Ukraine aid" href="http://politicalticker.blogs.cnn.com/2014/04/04/">4</a></td><td><a title="White House, Republicans push opposing economic agendas in weekly addresses
+Obama congratulates Afghan voters on high election turnout" href="http://politicalticker.blogs.cnn.com/2014/04/05/">5</a></td>
+	</tr>
+	<tr>
+		<td><a title="The 'Inside Politics' forecast: Recruiting Sink to run again
+Pelosi: Cheney is ‘proud’ of Bush-era CIA that misled public
+Obamas to attend Fort Hood memorial
+Former mentor might not back a Christie presidential run
+White House to stress equal pay in policy, political push
+Lawmakers agree military base security must be reviewed
+Rand Paul considering expanded whistleblower laws for contractors
+White House has talked with Samsung about Obama-Ortiz selfie
+Sunday Chatter: Fort Hood, damning CIA report, campaign finance and Obamacare
+Jeb Bush: Immigration is 'not a felony' but 'an act of love'" href="http://politicalticker.blogs.cnn.com/2014/04/06/">6</a></td><td id="today"><a title="Brown to formally jump into Senate race
+Inside Politics: Jeb Bush says immigration is an &quot;act of love&quot;; Will his party agree?
+White House counsel set to leave in May
+Hillary Clinton poses with Pussy Riot members
+Poll: Rate of uninsured Americans drops" href="http://politicalticker.blogs.cnn.com/2014/04/07/">7</a></td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
+	</tr>
+	<tr>
+		<td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td>
+	</tr>
+	<tr>
+		<td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td>
+	</tr>
+	<tr>
+		<td>27</td><td>28</td><td>29</td><td>30</td>
+		<td colspan="3" class="pad">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table></div></div><div class="widget-9 cnn_widget_last cnn_widget cnn_cnn_widget_adtag" id="cnn_cnn_adtag-5"><h3 class="cnn_widget_title"></h3><div class="cnn_adtag_bot"><!-- CALLOUT|http://ads.cnn.com/html.ng/site=cnn&cnn_pagetype=blog&cnn_position=336x280_bot&cnn_rollup=politics&cnn_section=political_ticker&page.allowcompete=no&params.styles=fs|CALLOUT -->
+<!-- ADSPACE: politics/political_ticker/blog/bot.336x280 -->
+<div align="center" style="padding: 0px; margin: 0px; border: 0px none; display: block;" id="ad-43ea6b347ba5b871"><iframe width="0" scrolling="no" height="0" frameborder="0" id="43ea6b347ba5b871" name="Advertisement" style="position: absolute; top: -20px; left: -20px;" marginwidth="0" marginheight="0" src="http://ads.cnn.com/html.ng/site=cnn&amp;cnn_pagetype=blog&amp;cnn_position=336x280_bot&amp;cnn_rollup=politics&amp;cnn_section=political_ticker&amp;page.allowcompete=no&amp;params.styles=fs&amp;Params.User.UserID=5341ed620ac4450a3c745d367501fa9d&amp;transactionID=13968814095089708417740044&amp;tile=7258041886931&amp;domId=43ea6b347ba5b871&amp;kxid=n9k7ach4r&amp;kxseg="></iframe></div>
+<script type="text/javascript">
+cnnad_createAd("43ea6b347ba5b871","http://ads.cnn.com/html.ng/site=cnn&amp;cnn_pagetype=blog&amp;cnn_position=336x280_bot&amp;cnn_rollup=politics&amp;cnn_section=political_ticker&amp;page.allowcompete=no&amp;params.styles=fs","280","336");
+cnnad_registerSpace("43ea6b347ba5b871","336","280");
+</script>
+<!-- ADSPACE-END --><div class="cnn_adtitle"><img alt="Advertisement" src="http://i.cdn.turner.com/cnn/.element/img/3.0/global/misc/advertisement.gif"></div></div></div>
+</div>
+
+
+	<div style="height:20px;" class="cnnPad9Top"></div>
+
+
+
+	<!-- /cnnRRBoxContent --><div class="cnnRRBoxFooter"><img width="4" height="4" alt="" src="http://i.cdn.turner.com/cnn/.element/img/2.0/mosaic/base_skins/right_rail/grey_corner_BL.gif"></div></div><!-- /cnnRRBox --></div><!-- /cnnRightCol -->
+
+</div>						</div>
+						<div class="cnn_clear"><img alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/1px.gif"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="cnn_shdbot"><div class="cnn_gap"><img alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/1px.gif"></div></div>
+		<!-- /content -->
+		<div class="cnn_clear"><img width="1" height="1" alt="" src="http://i.cdn.turner.com/cnn/images/1.gif"></div>
+	</div><!-- / cnnContentContainer2 -->
+
+	<div class="cnn_footer_graphic"></div>
+
+		
+		<script>
+			(function ($j, win, doc, undef) {
+				'use strict';
+				/**&gt; Set video_embed_count **/
+				if (win.cnn_metadata === undef) {
+					win.cnn_metadata = {};
+				}
+				$j.extend(true, win.cnn_metadata, {"business":{"cnn":{"page":{"video_embed_count":0}}}});
+			}(jQuery, window, document, undefined));
+		</script>
+	<!-- cnn footer -->
+<div class="cnn_blog_footer_area">
+	<script>
+	(function( $j, win, undef ) {
+					var warn = 'Template cnn_metadata.business.cnn.page.publish_date already set to:';
+			win.cnn_metadata = $j.extend( {}, { 'business': { 'cnn': { 'page':{} } } } , ( win.cnn_metadata || {} ) );
+
+			if ( undef === cnn_metadata.business.cnn.page.publish_date ) {
+				cnn_metadata.business.cnn.page.publish_date = "2014/04/07";
+				warn = '';
+			}
+			if ('' !== warn &amp;&amp; 'function' === typeof console.log) {
+				warn = warn +  cnn_metadata.business.cnn.page.publish_date;
+				console.log(warn);
+			}
+				//adding a new branding_ad value to cnn_metadata object
+		cnn_metadata.business.cnn.page.branding_ad = "";
+	}( jQuery, window , undefined ) );
+</script>
+		 <div id="cnn_ftrcntnt">
+<div class="clearfix" id="cnn_ftrcntntinner">
+<div class="cnn_ftrdivl1"></div>
+<div id="cnnLWPWeather" style="visibility: visible;"><div class="cnn_ftrwthr1">	<a title="" href="http://weather.cnn.com/weather/forecast.jsp?zipCode=31041"><img width="54" height="47" border="0" class="cnn_ie6png" alt="" src="http://i.cdn.turner.com/cnn/.e/img/3.0/weather/03/04.png"></a></div><div class="cnn_ftrwthr2"><div class="cnn_ftrwthr3">64°</div><div class="cnn_ftrwthr4"><div>HI 71°<span style="padding-left:7px">LO 50°</span></div><div style="clear:left; line-height: 13px"><span style="padding-right:6px"><strong>Ideal, GA</strong></span><a href="http://weather.cnn.com/weather/forecast.jsp?zipCode=31041">Weather forecast</a></div></div></div></div>
+
+<div id="ftr-search">
+	<form onsubmit="return cnnFootSearch(this);" action="http://www.cnn.com/search/" method="get">
+
+
+<div class="ftr-search-datacntr">
+<div class="ftr-search-tfield"><input type="text" value="" maxlength="40" size="12" name="query"></div>
+<div class="ftr-search-sicon"><input type="image" style="width:55px; height:21px;" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/search/search_btn_footer.gif"></div>
+</div>
+	
+		<input type="hidden" value="mixed" id="cnnFtrSrchType" name="cnnFtrSrchType">
+
+<div class="cnn_ftrggle"><img width="88" height="13" border="0" class="cnn_ie6png" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/global/footer/pngs/footer_google.png"></div>
+
+	</form>
+</div>
+
+<div class="cnn_clear"></div>
+
+<div style="background-color:#EBEBEB; margin-top:3px" class="cnn_divline"></div>
+
+<div class="cnn_ftrnvlnks">
+
+<div><a href="http://www.cnn.com/">Home</a> | <a href="http://www.cnn.com/video/">Video</a> | <a href="http://www.cnn.com/trends/">CNN Trends</a> | <a href="http://www.cnn.com/US/">U.S.</a> | <a href="http://www.cnn.com/WORLD/">World</a> | <a href="http://www.cnn.com/POLITICS/">Politics</a> | <a href="http://www.cnn.com/JUSTICE/">Justice</a> | <a href="http://www.cnn.com/SHOWBIZ/">Entertainment</a> | <a href="http://www.cnn.com/TECH/">Tech</a> | <a href="http://www.cnn.com/HEALTH/">Health</a> | <a href="http://www.cnn.com/LIVING/">Living</a> | <a href="http://www.cnn.com/TRAVEL/">Travel</a> | <a href="http://www.cnn.com/OPINION/">Opinion</a> | <a href="http://ireport.cnn.com/?cnn=yes">iReport</a> | <a href="http://money.cnn.com/?cnn=yes">Money</a> | <a href="http://bleacherreport.com/?utm_source=cnn.com&amp;utm_medium=referral&amp;utm_campaign=cnn-footer">Sports</a></div> 
+
+<div><a title="" href="http://www.cnn.com/tools/index.html">Tools &amp; widgets</a> | <a title="" href="http://www.cnn.com/services/rss/">RSS</a> | <a title="" href="http://www.cnn.com/services/podcasting/">Podcasts</a> | <a title="" href="http://www.cnn.com/exchange/blogs/index.html">Blogs</a> | <a title="" href="http://www.cnn.com/mobile/">CNN mobile</a> | <a title="" href="http://www.cnn.com/profile/">My profile</a> | <a title="" href="http://www.cnn.com/profile/">E-mail alerts</a> <!--| <a href="http://www.cnn.com/audio/radio/winmedia.html" title="">CNN Radio</a>--> | <a title="" href="http://www.turnerstoreonline.com/">CNN shop</a> | <a title="" href="http://www.cnn.com/sitemap/">Site map</a> | <a rel="nofollow" title="" href="http://www.cnn.com/feedback/">Contact us</a></div>
+
+</div>
+
+<div class="cnn_ftrdivl2"></div>
+
+<div class="cnn_ftrlnggcntr">
+<div><a title="" href="http://www.cnn.com/espanol/">CNN en ESPAÑOL</a> | <a title="CNN Mexico" href="http://mexico.cnn.com">CNN México</a> | <a title="" href="http://www.cnnchile.com">CNN Chile</a> | <a title="" href="http://www.cnnexpansion.com">CNN Expansión</a></div>
+<div><!-- updated pbb --><span class="cnn_ftrlarabic"><a href="http://arabic.cnn.com/" class="cnn_ie6png"><img width="32" height="11" border="0" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/1px.gif"></a></span> | <span class="cnn_ftrljapan"><a class="cnn_ie6png" href="http://www.cnn.co.jp/"><img width="32" height="11" border="0" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/1px.gif"></a></span> | <span class="cnn_ftrlturkish"><a class="cnn_ie6png" href="http://www.cnnturk.com/"><img width="32" height="11" border="0" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/1px.gif"></a></span></div>
+<div><a title="" href="http://www.cnn.com/CNN/Programs/">CNN TV</a> | <a title="" href="http://www.cnn.com/HLN/">HLN</a> | <a title="" href="http://transcripts.cnn.com/TRANSCRIPTS/">Transcripts</a></div>
+</div>
+
+<div class="cnn_ftrlgcpy">
+<div><img width="23" height="11" border="0" class="cnn_ie6png" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/global/footer/pngs/footer_cnn_logo.png">&copy; 2012 Cable News Network. <a title="" class="cnn_ftrtbslink" href="http://www.turner.com/">Turner Broadcasting System, Inc.</a> All Rights Reserved.</div>
+<div class="cnn_ftrlgcpy1"><a rel="nofollow" title="" href="http://www.cnn.com/interactive_legal.html">Terms of service</a> | <a rel="nofollow" title="" href="http://www.cnn.com/privacy.html">Privacy guidelines</a> | <a title="" href="http://www.cnn.com/services/ad.choices/">Ad choices</a><img width="12" height="12" border="0" class="cnn_ie6png" style="margin:0 0 0 4px;" alt="" src="http://i.cdn.turner.com/cnn/.element/img/3.0/global/misc/logo_ad_choices_footer.png"> | <a title="" href="http://www.cnn.com/services/ad.practices/">Advertising practices</a> | <a rel="nofollow" title="" href="http://www.cnn.com/services/advertise/main.html">Advertise with us</a> | <a title="" href="http://www.cnn.com/about/">About us</a> | <a rel="nofollow" title="" href="http://www.turner.com/careers/">Work for us</a> | <a rel="nofollow" title="" href="http://www.cnn.com/help/">Help</a> | <a href="http://www.cnnnewsource.com" rel="nofollow">CNN Newsource</a> | <a href="http://www.cnnimagesource.com" rel="nofollow">License Footage</a><br><br>Powered by <a target="_blank" href="http://en.wordpress.com/vip-hosting/">WordPress.com VIP</a></div>
+
+</div>
+
+<div class="cnn_clear"></div>
+</div><!-- /cnn_ftrcntntinner -->
+</div><!-- /cnn_ftrcntnt -->
+
+<script src="http://js.revsci.net/gateway/gw.js?csid=A09801"></script>
+<script>cnnad_sendADMData();cnnad_ugsync();</script><script> 
+ 	A09801.DM_cat("cnn &gt; politics &gt; political_ticker"); 
+  A09801.DM_addEncToLoc(); 
+ 	A09801.DM_tag(); 
+ </script> 
+ 
+
+<script src="http://i.cdn.turner.com/cnn/.element/js/3.0/omni/adbp.js" type="text/javascript"></script>
+
+<script>
+
+	var t_url = window.location.href + '';
+	
+	//see if it's a wordpress blog
+	if(t_url.match(/\.blogs\.cnn\.com/) || t_url.match(/(cnnradio|cnnespanol|eatocracy)\.cnn\.com/)) {
+	
+		cnn_adbpblogpop();
+		
+	}
+	
+</script>
+
+<script src="http://z.cdn.turner.com/cnn/.e/js/libs/jsmd-33.min.js"></script>
+
+
+<script language="JavaScript">
+   var jsmd;
+        jsmd = _jsmd.init();
+        var pageURL = location.href.toLowerCase(); 
+        if (pageURL.indexOf("/.element/ssi/ads.iframes/") == -1 &amp;&amp; pageURL.indexOf("/doubleclick/dartiframe.html") == -1 &amp;&amp; pageURL.indexOf("/search/") == -1) { 
+         if(_jsmd.plugin.gQuery("refresh")){jsmd.trackMetrics("dynamic-autoRefresh","autorefresh","cnn-autorefresh"); }
+         else if(_jsmd.plugin.gQuery("is_LR"))
+         {
+            //do nothing
+         }
+         else if(cnn_metadata.template_type_content !="gallery"){  
+			jsmd.send();
+          }
+        }
+
+</script>
+
+
+
+
+	</div>
+<!-- /cnn footer -->
+	
+										<!-- CONTENT END -->
+									</div><!-- /main content -->
+								</div>
+							</div><!-- /cnn_contentarea -->
+						</div><!-- /cnn_maincntnr -->
+					</div><!-- /cnn_brkt_4 -->
+				</div><!-- /cnn_brkt_3 -->
+			</div><!-- /cnn_brkt_2 -->
+		</div><!-- /cnnContainer -->
+	</div><!-- /cnn-bodywrap -->
+	
+<script type="text/javascript" language="JavaScript">var cnnCurrTime = new Date(1396877863076); var cnnCurrHour = 9; var cnnCurrMin = 37; var cnnCurrDay='Mon';</script><img width="1" height="1" onload="getDEAdHeadCookie(this)" name="TargetImageDE" id="TargetImageDE" alt="" src="http://i.cdn.turner.com/cnn/images/1.gif"> 
+	<div style="display:none">
+	</div>
+<script>window.cnnWidgetBaseURI = "http://i.cdn.turner.com/cnn/.element/widget"; var cnn_sharebarconfig={"url":"http:\/\/politicalticker.blogs.cnn.com\/2014\/04\/07\/hillary-clinton-poses-with-pussy-riot-members\/","analytics":"o","platform":"d","instances":2,"getUpdatedURL":"","plugincodes":{"facebook":"&lt;div class=\"fb-like\" data-send=\"false\" data-layout=\"box_count\" data-width=\"97\" data-show-faces=\"false\" data-action=\"recommend\" href=\"http:\/\/politicalticker.blogs.cnn.com\/2014\/04\/07\/hillary-clinton-poses-with-pussy-riot-members\/\"&gt;&lt;\/div&gt;","googleplus":"&lt;div class=\"g-plusone\" data-size=\"tall\" callback=\"cnn_plusone_vote\"&gt;&lt;\/div&gt;","twitter":"&lt;a href=\"https:\/\/twitter.com\/share\" class=\"twitter-share-button\" data-lang=\"en\" data-url=\"http:\/\/politicalticker.blogs.cnn.com\/2014\/04\/07\/hillary-clinton-poses-with-pussy-riot-members\/\" data-count=\"vertical\"&gt;Tweet&lt;\/a&gt;","linkedin":"&lt;scr" + "ipt type=\"IN\/Share\" data-url=\"http:\/\/politicalticker.blogs.cnn.com\/2014\/04\/07\/hillary-clinton-poses-with-pussy-riot-members\/\" data-counter=\"top\" data-onsuccess=\"cnn_linkedin_share\"&gt;&lt;\/script&gt;"}};</script>	
+			<!-- /// LOAD CHARTBEAT /// -->
+			<script type="text/javascript">
+			var _sf_async_config={};
+			_sf_async_config.uid = 41336;
+			_sf_async_config.useCanonical = true;
+							_sf_async_config.domain = 'cnn.com';
+				_sf_async_config.authors = 'CNN Political Unit';
+_sf_async_config.sections = ["politics"];
+	
+			jQuery(document).ready(function(){				  
+				window._sf_endpt=(new Date()).getTime();
+				var e = document.createElement('script');
+				e.setAttribute('language', 'javascript');
+				e.setAttribute('type', 'text/javascript');
+				e.setAttribute('src',
+				   (("https:" == document.location.protocol) ? "https://s3.amazonaws.com/" : "http://") +
+				   "static.chartbeat.com/js/chartbeat.js");
+				document.body.appendChild(e);
+			  });
+			</script>
+			<script src="http://s0.wp.com/wp-content/js/devicepx.js?m=1389017300g" type="text/javascript"></script>
+<script src="http://i.cdn.turner.com/cnn/.element/widget//loader/1.0.0/load.min.js?ver=20120816-1751" type="text/javascript"></script>
+<script src="http://z.cdn.turner.com/cnn/tmpl_asset/static/election-2012-common/64/js/common-lib-min.js?ver=64" type="text/javascript"></script>
+<script src="http://z.cdn.turner.com/cnn/tmpl_asset/static/blog/173/js/pluginlib-min.js?ver=173" type="text/javascript"></script>
+<script src="http://platform.twitter.com/widgets.js?ver=20111117" type="text/javascript"></script>
+<script src="http://s0.wp.com/wp-content/mu-plugins/twitter-blackbird-pie/pending.js?m=1392853840g" type="text/javascript"></script>
+<script>
+		( function ( $j, win, doc, undef ) {
+			var feed = win.cnnNewDay.rawData[0]; 
+			$j( '#cnn-lumenbox-module-comment' ).text( feed.Comment );
+			$j( '#cnn-lumenbox-module-image img' ).attr( 'src', feed.SourceUrl);					
+		}( jQuery, window, document, undefined ) );
+	</script>
+		
+	<script>
+	(function(doc, style, script) {
+		var css,
+			fcss = doc.getElementsByTagName(script)[0],
+			add = function(url, id) {
+				if (doc.getElementById(id)) {
+					return;
+				}
+
+				css = doc.createElement(style);
+				css.rel = 'stylesheet';
+				css.type = 'text/css';
+				css.href = url;
+				id &amp;&amp; (css.id = id);
+				fcss.parentNode.insertBefore(css, fcss);
+			};
+		add("http://i.cdn.turner.com/cnn/.element/widget/sharebar/0.2.2/templates/blogSingle.css", "blogSingleBottom");
+	}(document, 'link', 'script'));
+</script>
+
+<script id="cnnsocial_template_blogSingleBottom" type="text/html">&lt;div class="shareBarPostBottom"&gt;
+	&lt;div class="commentCount"&gt;&lt;div class="count"&gt;4&lt;/div&gt;&lt;div class="commentText offCenter"&gt;&lt;a href="http://politicalticker.blogs.cnn.com/2014/04/07/hillary-clinton-poses-with-pussy-riot-members/#comments" title="Comments for Hillary Clinton poses with Pussy Riot members"&gt;Comments &amp;raquo;&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;
+	&lt;nav data-bind="foreach:mainSites" class="sharebar_mainsites"&gt;    
+		&lt;div class="shareProp"  data-bind="attr:{'title':name}"&gt;
+			&lt;div data-bind="if: buttonCode()"&gt;					
+				&lt;div data-bind="'html': getButtonCode, attr:{'class': 'cnn_offical_' + name() + '_sharebutton'}"&gt;&lt;/div&gt;
+			&lt;/div&gt;			
+		&lt;/div&gt;
+	&lt;/nav&gt;
+	&lt;span class="moreSharing"&gt;&lt;b&gt;&lt;/b&gt;&lt;a  href="#" data-bind="click:openOtherSites"&gt;More sharing&lt;/a&gt;&lt;/span&gt;
+	&lt;nav data-bind="visible:otherSitesOpen" class="sharebar_sites callout border-callout"&gt;	
+		&lt;div data-bind="foreach:otherSites"&gt;
+			&lt;div class="shareProp"  data-bind="attr:{'title':name, 'class':'icon_'+cssClass()}"&gt;
+				&lt;a class="siteLinks" data-bind="text:name,click:open" href="#"&gt;&lt;/a&gt;				
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;b class="notch"&gt;&lt;/b&gt;				
+	&lt;/nav&gt;
+&lt;/div&gt;
+</script><script id="cnnsocial_template_blogSingle" type="text/html">&lt;div class="shareBarPostRight"&gt;
+	&lt;nav data-bind="foreach:mainSites" class="sharebar_mainsites"&gt;    
+		&lt;div class="shareProp"  data-bind="attr:{'title':name, 'class':'shareProp cnn_item_'+$index()}"&gt;
+			&lt;div data-bind="if: buttonCode()"&gt;
+				&lt;div data-bind="'html': getButtonCode, attr:{'class': 'cnn_offical_' + name() + '_sharebutton'}"&gt;&lt;/div&gt;
+			&lt;/div&gt;					
+		&lt;/div&gt;
+	&lt;/nav&gt;
+	&lt;span class="moreSharing"&gt;&lt;b&gt;&lt;/b&gt;&lt;a  href="#" data-bind="click:openOtherSites"&gt;More sharing&lt;/a&gt;&lt;/span&gt;
+	&lt;nav data-bind="visible:otherSitesOpen" class="sharebar_sites callout border-callout"&gt;	
+		&lt;div data-bind="foreach:otherSites"&gt;
+			&lt;div class="shareProp"  data-bind="attr:{'title':name, 'class':'icon_'+cssClass()}"&gt;
+				&lt;a class="siteLinks" data-bind="text:name,click:open" href="#"&gt;&lt;/a&gt;				
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;b class="notch"&gt;&lt;/b&gt;				
+	&lt;/nav&gt;
+&lt;div&gt;
+</script>		<script type="text/javascript">
+			var _vrq = _vrq || [];
+			_vrq.push(['id', 6]);
+			_vrq.push(['automate', false]);
+			_vrq.push(['track', function(){}]);
+			(function(d, a) { 
+				var s = d.createElement(a),
+					x = d.getElementsByTagName(a)[0];
+
+				s.async = true;
+				s.src = 'http://a.visualrevenue.com/vrs.js';
+				x.parentNode.insertBefore(s, x);
+			})(document, 'script');
+		</script>
+			<script src="//widgets.outbrain.com/outbrain.js" async="async" type="text/javascript"></script>
+	<script type="text/javascript">
+// &lt;![CDATA[
+(function() {
+try{
+  if ( window.external &amp;&amp;'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]&gt;
+</script><script type="text/javascript" src="http://s.stats.wordpress.com/w.js?21"></script>
+<script type="text/javascript">
+st_go({'blog':'1121504','v':'wpcom','tz':'-4','user_id':'0','post':'299949','subd':'cnnpoliticalticker'});
+function st_vt() {var x=document.createElement("img");x.src="http://stats.wordpress.com/g.gif?blog=1121504&amp;v=wpcomvt&amp;tz=-4&amp;user_id=0&amp;post=299949&amp;subd=cnnpoliticalticker&amp;rand="+Math.random();}
+ex_go({'crypt':'UE40eW5QN0p8M2Y/RE1BNmNJfGhxNCVxUDExYmtXUVYmb2hZL0lEQT9qcF9NWi1bMDJfLy90VXNvY2U3ZFZ1RWlDan5dUUVCUnh3VDl+Ti82WXdGNm9CUHVoQl1OSE9bR2ssb3RqbV8mPWhzMDZKT0U/OWkvay1rXy1VeU8sYkk9UVEzQVJnR0JCeXVvQmRtRS1Ob0NtYm15cTAxV1RmckNHV2h4eUR0ZWZwRG5qeWs4fFNGRGM5flNYSXZ4fGhTUWRWRVpwL3xYSGZBaVplRnxCRFZ6eGk4aFtnQ1BhMiVnU2g5fi55aHRUZF1jQ1tLVWQtc1tNbXF6SW5sSzh8dGxdPz9BK0pBNld5SDglQndjcVVheV1CaUNOU1Rf'});
+addLoadEvent(function(){linktracker_init('1121504',299949);});
+	</script><img alt="" src="http://stats.wordpress.com/g.gif?host=politicalticker.blogs.cnn.com&amp;rand=0.7785644042306586&amp;blog=1121504&amp;v=wpcom&amp;tz=-4&amp;user_id=0&amp;post=299949&amp;subd=cnnpoliticalticker&amp;ref=" id="wpstats"><img style="display:none" alt="" src="http://stats.wordpress.com/g.gif?v=wpcom-no-pv&amp;rand=0.46960213892640734&amp;crypt=UE40eW5QN0p8M2Y/RE1BNmNJfGhxNCVxUDExYmtXUVYmb2hZL0lEQT9qcF9NWi1bMDJfLy90VXNvY2U3ZFZ1RWlDan5dUUVCUnh3VDl+Ti82WXdGNm9CUHVoQl1OSE9bR2ssb3RqbV8mPWhzMDZKT0U/OWkvay1rXy1VeU8sYkk9UVEzQVJnR0JCeXVvQmRtRS1Ob0NtYm15cTAxV1RmckNHV2h4eUR0ZWZwRG5qeWs4fFNGRGM5flNYSXZ4fGhTUWRWRVpwL3xYSGZBaVplRnxCRFZ6eGk4aFtnQ1BhMiVnU2g5fi55aHRUZF1jQ1tLVWQtc1tNbXF6SW5sSzh8dGxdPz9BK0pBNld5SDglQndjcVVheV1CaUNOU1Rf" id="wpstats2">
+<noscript>&lt;img src="http://stats.wordpress.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /&gt;</noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&amp;x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&amp;x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&amp;x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//stats.wordpress.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&amp;baba=' + Math.random();
+	}
+	
+}
+</script><script type="text/javascript">cnnInitOverlay();</script>
+
+<script language="javascript" type="text/javascript" src="http://static.chartbeat.com/js/chartbeat.js"></script><img width="1" height="1" class="cnn-tracking-img" src="http://www.cnn.com/images/tracking/wpblog.gif?loc=http%3A%2F%2Fpoliticalticker.blogs.cnn.com%2F2014%2F04%2F07%2Fhillary-clinton-poses-with-pussy-riot-members%2F"><script defer="" async="" src="http://i.cdn.turner.com/cnn/.element/widget/sharebar/0.2.2/main.js" id="main"></script><iframe scrolling="no" frameborder="0" id="rufous-sandbox" allowtransparency="true" style="display: none;"></iframe><script defer="" async="" src="//connect.facebook.net/en_US/all.js" id="all"></script><script defer="" async="" src="https://apis.google.com/js/plusone.js" id="plusone" gapi_processed="true"></script><script defer="" async="" src="http://z.cdn.turner.com/cnn/.e/js/libs/knockout-2.1.0.js" id="knockout_2.1.0"></script><script defer="" async="" src="http://i.cdn.turner.com/cnn/.element/widget/sharebar/0.2.2/model.js" id="model"></script><div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe scrolling="no" frameborder="0" name="fb_xdm_frame_http" allowtransparency="true" id="fb_xdm_frame_http" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tab-index="-1" style="border: medium none;" src="http://static.ak.facebook.com/connect/xd_arbiter/wTH8U0osOYl.js?version=40#channel=f32ac923a2045e&amp;origin=http%3A%2F%2Fpoliticalticker.blogs.cnn.com"></iframe><iframe scrolling="no" frameborder="0" name="fb_xdm_frame_https" allowtransparency="true" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tab-index="-1" style="border: medium none;" src="https://s-static.ak.facebook.com/connect/xd_arbiter/wTH8U0osOYl.js?version=40#channel=f32ac923a2045e&amp;origin=http%3A%2F%2Fpoliticalticker.blogs.cnn.com"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe scrolling="no" frameborder="0" name="f1e07e0907067be" allowtransparency="true" style="display: none;" src="https://www.facebook.com/connect/ping?client_id=80401312489&amp;domain=politicalticker.blogs.cnn.com&amp;origin=1&amp;redirect_uri=http%3A%2F%2Fstatic.ak.facebook.com%2Fconnect%2Fxd_arbiter%2FwTH8U0osOYl.js%3Fversion%3D40%23cb%3Df10419eb7a8b464%26domain%3Dpoliticalticker.blogs.cnn.com%26origin%3Dhttp%253A%252F%252Fpoliticalticker.blogs.cnn.com%252Ff32ac923a2045e%26relation%3Dparent&amp;response_type=token%2Csigned_request%2Ccode&amp;sdk=joey"></iframe></div></div></div><div id="csimanagerdiv"><div id="csiIframeObjscsi1"><iframe width="10" height="10" src="http://svcs.cnn.com/weather/getForecast?time=8&amp;mode=json_html&amp;zipCode=31041&amp;locCode=09GA&amp;celcius=false&amp;csiID=csi1" id="csiDataIframecsi1" name="csiDataIframecsi1" style="visibility:hidden;position:absolute;top:0px;left:-100px;"></iframe></div></div><div id="csimanagerdivdelayed"></div></body><iframe style="display: none;" src=""></iframe></html>

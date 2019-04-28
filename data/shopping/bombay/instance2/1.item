@@ -1,0 +1,6 @@
+{
+"Title": '/html/body/table/tr[2]/td/table/tr[2]/td[2]/table/tr/td[2]/div/form/table/tr[1]/td/div[1]',
+"SKU" : '/html/body/table/tr[2]/td/table/tr[2]/td[2]/table/tr/td[2]/div/form/table/tr[1]/td/div[2]',
+"Price": '/html/body/table/tr[2]/td/table/tr[2]/td[2]/table/tr/td[2]/div/form/table/tr[2]/td[1]/table/tr/td/div[2]/div[3]/div',
+"Description": '/html/body/table/tr[2]/td/table/tr[2]/td[2]/table/tr/td[2]/div/form/table/tr[2]/td[1]/table/tr/td/div[2]/div[2]/ul/li[1]',
+}

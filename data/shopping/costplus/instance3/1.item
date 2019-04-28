@@ -1,0 +1,6 @@
+{
+"Description": '/html/body/div[1]/div[2]/div[4]/div/form/div[2]/div/div[2]/p',
+"Title": '/html/body/div[1]/div[2]/div[4]/div/form/div[2]/div/h1',
+"Price": '/html/body/div[1]/div[2]/div[4]/div/form/div[2]/div/div[2]/p[1]',
+"SKU": '/html/body/div[1]/div[2]/div[4]/div/form/div[2]/div/div[1]',
+}
