@@ -6,3 +6,4 @@ XTreePath: A generalization of XPath to handle real world structural variation. 
 
 The data used in the paper is here: [https://academictorrents.com/details/411576c7e80787e4b40452360f5f24acba9b5159](https://academictorrents.com/details/411576c7e80787e4b40452360f5f24acba9b5159)
 
+![](treepath-figure.png)
